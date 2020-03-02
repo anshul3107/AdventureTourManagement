@@ -9,6 +9,7 @@ namespace ADSM.Models
 {
     public class User_Details
     {
+        [Key]
         public int Reg_Id { get; set; }
         [Display(Name = "First Name")]
         [Required(ErrorMessage =" First Name is required")]
@@ -26,8 +27,9 @@ namespace ADSM.Models
         [Required(ErrorMessage = " Address is required")]
         public string Address { get; set; }
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
-        public int Contact { get; set; }
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [RegularExpression(@"^(\d{10})$", ErrorMessage = "Please enter correct number")]
+        public string Contact { get; set; }
         [Required(ErrorMessage = "Please select your gender")]
         public string Gender { get; set; }
         [Required(ErrorMessage = " Password is required")]

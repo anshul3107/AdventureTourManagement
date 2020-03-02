@@ -50,16 +50,7 @@ D:\CAD\ADSM\bin\roslyn\vbc.exe.config
 D:\CAD\ADSM\bin\roslyn\vbc.rsp
 D:\CAD\ADSM\bin\roslyn\VBCSCompiler.exe
 D:\CAD\ADSM\bin\roslyn\VBCSCompiler.exe.config
-D:\CAD\ADSM\bin\System.Web.Razor.xml
-D:\CAD\ADSM\bin\System.Web.Webpages.xml
-D:\CAD\ADSM\bin\System.Web.Webpages.Deployment.xml
-D:\CAD\ADSM\bin\System.Web.Webpages.Razor.xml
-D:\CAD\ADSM\bin\System.Web.Helpers.xml
-D:\CAD\ADSM\bin\System.Web.Mvc.xml
-D:\CAD\ADSM\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\CAD\ADSM\obj\Debug\ADSM.csprojAssemblyReference.cache
 D:\CAD\ADSM\obj\Debug\ADSM.csproj.CopyComplete
 D:\CAD\ADSM\obj\Debug\ADSM.dll
 D:\CAD\ADSM\obj\Debug\ADSM.pdb
-D:\CAD\ADSM\bin\EntityFramework.xml
-D:\CAD\ADSM\bin\EntityFramework.SqlServer.xml
+D:\CAD\ADSM\obj\Debug\ADSM.csprojAssemblyReference.cache

@@ -41,7 +41,7 @@ namespace ADSM
             this.Configuration.ProxyCreationEnabled = true;  // Error: A circular reference was detected while serializing an object of type 'System.Data.Entity.DynamicProxies
 
             // App schema
-            modelBuilder.Entity<Models.User_Details>().ToTable("ADSM.User_Details");
+            modelBuilder.Entity<Models.User_Details>().ToTable("User_Details");
 
         }
 

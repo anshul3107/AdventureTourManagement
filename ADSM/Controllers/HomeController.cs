@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.EntityClient;
 using ADSM.Models;
 
 namespace ADSM.Controllers
 {
     public class HomeController : Controller
     {
+        private ADSMDbContext db = new ADSMDbContext();
         // GET: Home
         public ActionResult Index()
         {
@@ -34,9 +36,29 @@ namespace ADSM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Registration(User_Details user)
+        {
+            if (ModelState.IsValid)
             {
+                if(user.Reg_Id == 0 && user != null)
+                {
+                    //user.LastUpdatedBy = Session["Name"].ToString();
+                    user.LastUpdatedBy = "MJ";
+                    user.LastUpdatedOn = DateTime.Now;
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
+
+        public ActionResult Users()
+        {
+            List<User_Details> user = db.Users.OrderBy(e => e.Reg_Id).ToList();
+            return View(user);
+        }
+
         public ActionResult Login()
         {
             return View();
