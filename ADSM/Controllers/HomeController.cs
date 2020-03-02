@@ -64,6 +64,28 @@ namespace ADSM.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(User_Details user)
+        {
+            var validUser = db.Users.Where(e => e.Email.Equals(user.Email) && e.Password.Equals(user.Password)).FirstOrDefault();
+
+            if (validUser != null)
+            {
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                ViewBag.Message = "UserName and Password do not match.";
+                return View();
+            }
+        }
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
         public ActionResult ForgotPassword()
         {
             return View();
