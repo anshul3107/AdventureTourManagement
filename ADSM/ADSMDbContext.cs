@@ -22,12 +22,8 @@ namespace ADSM
             objectcontext.CommandTimeout = 120;
         }
 
-        /// <summary>
-        /// Set database first options
-        /// The model backing the 'GPWorldDbContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269)
-        /// </summary>
+
         /// <param name="modelBuilder"></param>
-        ///
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,9 +38,21 @@ namespace ADSM
 
             // App schema
             modelBuilder.Entity<Models.User_Details>().ToTable("User_Details");
+            //modelBuilder.Entity<Models.Booking_details>().ToTable("Booking_details");
+            //modelBuilder.Entity<Models.Package_details>().ToTable("Package_details");
+            //modelBuilder.Entity<Models.Region>().ToTable("Region");
+            //modelBuilder.Entity<Models.Activities>().ToTable("Activities");
+            //modelBuilder.Entity<Models.Activity_package>().ToTable("Activity_package");
+            //modelBuilder.Entity<Models.Activity_region>().ToTable("Activity_region");
 
         }
 
         public DbSet<User_Details> Users { get; set; }
+        //public DbSet<Booking_details> Bookings { get; set; }
+        //public DbSet<Package_details> Packages { get; set; }
+        //public DbSet<Region> Regions { get; set; }
+        //public DbSet<Activities> Activities { get; set; }
+        //public DbSet<Activity_package> ActPackages { get; set; }
+        //public DbSet<Activity_region> ActRegion { get; set; }
     }
 }

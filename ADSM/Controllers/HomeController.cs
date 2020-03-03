@@ -96,5 +96,10 @@ namespace ADSM.Controllers
             return View();
         }
 
+        public ActionResult Map()
+        {
+            return View();
+        }
+
     }
 }

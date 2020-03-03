@@ -27,7 +27,8 @@
     <link href="~/Scripts/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="~/Content/image/Boostrap.svg" />
-    <link rel="stylesheet" href="~/Content/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/jquery-jvectormap-2.0.5.css" />
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css" />''
 
 </head>
 
@@ -61,35 +62,35 @@
 
                 <div class="navbar-collapse breadcrumb-item" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                            <li class="nav-item active">
-                                @Html.ActionLink("Home", "Index", "Home", new { @class = "navbar-text", @style = "margin-right:20px;" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("About Us", "AboutUs", "Home", new { @class = "navbar-text" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("Contact", "Contact", "Home", new { @class = "navbar-text" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("Registration", "Registration", "Home", new { @class = "navbar-text" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("Login", "Login", "Home", new { @class = "navbar-text" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("Forgot Password", "ForgotPassword", "Home", new { @class = "navbar-text" })
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
+                        <li class="nav-item active">
+                            @Html.ActionLink("Home", "Index", "Home", new { @class = "navbar-text", @style = "margin-right:20px;" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("About Us", "AboutUs", "Home", new { @class = "navbar-text" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Contact", "Contact", "Home", new { @class = "navbar-text" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Registration", "Registration", "Home", new { @class = "navbar-text" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Login", "Login", "Home", new { @class = "navbar-text" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Forgot Password", "ForgotPassword", "Home", new { @class = "navbar-text" })
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -116,7 +117,8 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
-
+    <script src="~/Content/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="~/Content/jquery-jvectormap-in-mill.js"></script>
     <!-- Menu Toggle Script -->
     <script>
         $("#menu-toggle").click(function (e) {
