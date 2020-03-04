@@ -1,0 +1,135 @@
+﻿@model ADSM.Models.User_Details
+
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Mvc Tutorial Application</title>
+ 
+</head>
+
+<body>
+
+
+    <div class="container body-content">
+        <br><br><br>
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 style="text-align:center"><b>Registration Module</b></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 style="text-align:center"><b>Registration</b></h4>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Registration", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <h4>Create a new account.</h4>
+                            <hr />
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.First_Name, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.First_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Last_Name, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.Last_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DOB, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.DOB, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Contact, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.Contact, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    Male  @Html.RadioButton("Gender", "Male")
+                                    Female  @Html.RadioButton("Gender", "Female")
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Confirm_Password, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.Confirm_Password, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" class="btn btn-default" value="Submit" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+
+
+    <script>
+
+        $("#DOB").datepicker({
+            format: 'dd-MM-yyyy',
+            autoclose: true,
+            weekStart: 1,
+            calendarWeeks: true,
+            todayHighlight: false,
+        });
+    </script>
+}
