@@ -504,7 +504,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interface\IActivityTrend.cs" />
-    <Compile Include="Models\Activity\Activities.cs" />
+    <Compile Include="Models\DbModel\Activities.cs" />
     <Compile Include="Models\GuestUser\RecentlyBoughtActivities.cs" />
     <Compile Include="Models\GuestUser\RecommendedActivities.cs" />
     <Compile Include="Models\GuestUser\SeasonalActivities.cs" />

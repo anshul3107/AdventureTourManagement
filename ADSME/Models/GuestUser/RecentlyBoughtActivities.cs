@@ -1,5 +1,4 @@
 ﻿using ADSM.Interface;
-using ADSM.Models.Activity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +12,6 @@ namespace ADSM.Models.GuestUser
         {
             throw new NotImplementedException();
         }
+
     }
 }

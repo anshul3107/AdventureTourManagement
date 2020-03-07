@@ -1,7 +1,7 @@
 ﻿using ADSM.Interface;
-using ADSM.Models.Activity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -18,15 +18,23 @@ namespace ADSM.Models.GuestUser
         {
             ADSMDbContext dbcontext = new ADSMDbContext();
             var result = dbcontext.Users.Select(x => x).ToList();
+            var activities_result = dbcontext.Activities.Select(x => x);
+            var ratings_result = dbcontext.ActivityRatings.Select(x => x);
 
-            var userdetailNames = result.Where(x => x.DOB.Month == 8).Select(x => x.First_Name + " " + x.Last_Name);
+            //var userdetailNames = result.Where(x => x.DOB.Month == 8).Select(x => x.First_Name + " " + x.Last_Name);
 
             #region Most recommended activties
             // List of all activities 
+            var activityRatingList = activities_result.Join(ratings_result, x => x.activity_id, y => y.activity_id,
+                (x, y) => new { x.activity_id,x.activity_name,x.activity_fee, y.activity_rating });
+
 
             // groupactivities basis ratings
+            var groupedactivities = activityRatingList.Select(x=> new {x.activity_id,x.activity_rating }).GroupBy(x => x.activity_id);
+            //var activitycount = groupedactivities.Count(x => x.activity_id);
 
-            // calculate avergae rating
+            // calculate average rating
+            //var averagerating =; 
 
             // obtain top three/five results
 

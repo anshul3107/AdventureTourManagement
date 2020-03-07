@@ -1,4 +1,4 @@
-﻿using ADSM.Models.Activity;
+﻿using ADSM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

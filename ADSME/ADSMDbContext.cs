@@ -36,9 +36,13 @@ namespace ADSM
             this.Configuration.ProxyCreationEnabled = true;
             // App schema
             modelBuilder.Entity<Models.User_Details>().ToTable("User_Details");
+            modelBuilder.Entity<Models.Activities>().ToTable("Activity");
+            modelBuilder.Entity<Models.ActivityRatings>().ToTable("ActivityRating");
 
         }
 
         public DbSet<User_Details> Users { get; set; }
+        public DbSet<Activities> Activities { get; set; }
+        public DbSet<ActivityRatings> ActivityRatings { get; set; }
     }
 }
