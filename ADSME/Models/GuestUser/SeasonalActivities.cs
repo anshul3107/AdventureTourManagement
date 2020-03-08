@@ -25,8 +25,6 @@ namespace ADSM.Models.GuestUser
 
                 var activitiesBooked = booked_activities.Join(activities, x => x.activity_id, y => y.activity_id, (x, y) => new { activities = y, booking = x });
 
-                SeasonalActivity s = new SeasonalActivity() { activities = new Activities};
-
                 var seasonalActivity = activitiesBooked.Select(x => new SeasonalActivity { activities = x.activities, booking_id = x.booking.booking_id, season = GetSeason(x.booking.booking_date) });
 
                 var seasonalActivitiesgrouped = from a in seasonalActivity
