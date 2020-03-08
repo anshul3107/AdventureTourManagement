@@ -14,6 +14,11 @@ namespace ADSM.Controllers
             return View();
         }
 
+        public ActionResult FetchRecommendedActivities()
+        {
 
+            return View();
+
+        }
     }
 }

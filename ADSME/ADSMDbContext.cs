@@ -44,5 +44,6 @@ namespace ADSM
         public DbSet<User_Details> Users { get; set; }
         public DbSet<Activities> Activities { get; set; }
         public DbSet<ActivityRatings> ActivityRatings { get; set; }
+        public DbSet<Bookings> Bookings { get; set; }
     }
 }

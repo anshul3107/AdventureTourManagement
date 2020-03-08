@@ -9,6 +9,6 @@ namespace ADSM.Interface
 {
     public interface IActivityTrend
     {
-        List<Activities> GetActivityTrend(string region = null);
+        List<dynamic> GetActivityTrend(string region = null);
     }
 }
