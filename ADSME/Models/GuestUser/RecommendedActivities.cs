@@ -8,9 +8,9 @@ using System.Web;
 
 namespace ADSM.Models.GuestUser
 {
-    public class RecommendedActivities : IActivityTrend
+    public class RecommendedActivities : IActivityService
     {
-        public List<dynamic> GetActivityTrend(string region = null)
+        public List<dynamic> GetActivity(string region = null)
         {
             var response = new List<dynamic>();
             try

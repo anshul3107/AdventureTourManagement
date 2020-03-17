@@ -6,31 +6,35 @@ using System.Web;
 
 namespace ADSM.Models.GuestUser
 {
-    public class RecentlyBoughtActivities : IActivityTrend
+    public class RecentlyBoughtActivities : IActivityService
     {
 
-        List<dynamic> IActivityTrend.GetActivityTrend(string region)
+       public List<dynamic> GetActivity(string region)
         {
             var response = new List<dynamic>();
             try
             {
                 ADSMDbContext dbContext = new ADSMDbContext();
-                var bookings_result = dbContext.Bookings.Select(x => x);
-                var activities_result = dbContext.Activities.Select(x => x);
+                var bookings_result = dbContext.Bookings.Select(x => x).ToList();
+                var activities_result = dbContext.Activities.Select(x => x).ToList();
 
                 //    #region Recently bought
 
                 //    list of all activities order by purchase date
 
-                var result = bookings_result.Select(x => x.booking_date);
-                var recent_activities = bookings_result.OrderByDescending(x => x.booking_date).Take(3);
-                /*                var activityNames = from activity in activities_result
-                                                    join recent in recent_activities on activity.activity_id equals recent.activity_id
-                                                    select new
-                                                    {
-                                                        activity.activity_name
-                                                    };*/
-                var activityNames = activities_result.Join(recent_activities, x => x.activity_id, y => y.activity_id, (x, y) => new { x.activity_name });
+                var result = bookings_result.Select(x => new { x.booking_date, x.activity_id});
+                var recent_activities = result.OrderByDescending(x => x.booking_date).Select(x=> new { x.booking_date,x.activity_id }).Take(3);
+
+                //var activityNames = from activity in activities_result
+                //                    join recent in recent_activities on activity.activity_id equals recent.activity_id
+                //                    select new
+                //                    {
+                //                        activity.activity_name
+                //                    };
+
+
+                var activityNames = activities_result.Join(recent_activities, x => new { ActivityID = x.activity_id },
+                    y => new { ActivityID = y.activity_id }, (x, y) => new { x.activity_name });
 
                 response = activityNames.ToList<dynamic>();
             }

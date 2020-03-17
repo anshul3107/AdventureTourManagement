@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ADSM.Interface;
+using ADSM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,17 +10,27 @@ namespace ADSM.Controllers
 {
     public class GuestDashboardController : Controller
     {
+        private IActivity _service;
+
+        public GuestDashboardController(IActivity service)
+        {
+            this._service = service;
+
+        }
+
         // GET: GuestDashboard
         public ActionResult Index()
         {
-            return View();
+            var listofActivities  = _service.GetActivities();
+            return this.View();
         }
 
-        public ActionResult FetchRecommendedActivities()
+        public ActionResult FetchActivity(int activity_id)
         {
-
-            return View();
-
+            // further processing
+            return this.View();
         }
+
+
     }
 }

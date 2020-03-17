@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace ADSM.Models
 {
@@ -10,6 +13,8 @@ namespace ADSM.Models
         public string activity_name { get; set; }
         public int activity_slots { get; set; }
         public int activity_fee { get; set; }
-        public DateTime LastUpdatedOn { get; set; }
+        public DateTime last_updated_on { get; set; }
+
+
     }
 }

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using ADSM.Models;
 
-
 namespace ADSM
 {
     public class ADSMDbContext : DbContext

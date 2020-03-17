@@ -1,4 +1,5 @@
 ﻿using ADSM.Interface;
+using ADSM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,9 @@ using System.Web;
 
 namespace ADSM.Models.GuestUser
 {
-    public class SeasonalActivities : IActivityTrend
+    public class SeasonalActivities : IActivityService
     {
-        List<dynamic> IActivityTrend.GetActivityTrend(string region)
+        List<dynamic> IActivityService.GetActivity(string region)
         {
             var response = new List<dynamic>();
             try

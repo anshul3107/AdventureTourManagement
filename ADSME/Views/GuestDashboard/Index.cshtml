@@ -1,0 +1,82 @@
+﻿@model ADSM.ViewModels.VMActivity
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>Index</h2>
+
+<table>
+    <tr>
+        @{
+
+            var data = Model.Activities;
+
+            if(data != null)
+            {
+                if(data.Any(x=>x.Key== "RA"))
+                {
+                    var raData = data["RA"];
+
+                    foreach (var item in raData)
+                    {
+                <td>
+
+                    @Html.ActionLink(item.activity_name,"FetchActivity",new object[item.activity_id]);
+                </td>
+                    }
+                }
+            }
+
+        }
+    </tr>
+    <tr>
+        @{
+
+
+            if (data != null)
+            {
+                if (data.Any(x => x.Key == "SA"))
+                {
+                    var raData = data["SA"];
+
+                    foreach (var item in raData)
+                    {
+                        <td>
+
+                            @Html.ActionLink(item.activity_name, "FetchActivity", new object[item.activity_id]);
+                        </td>
+                    }
+                }
+            }
+
+        }
+    </tr>
+    <tr>
+        @{
+
+
+            if (data != null)
+            {
+                if (data.Any(x => x.Key == "RB"))
+                {
+                    var raData = data["RB"];
+
+                    foreach (var item in raData)
+                    {
+                        <td>
+
+                            @Html.ActionLink(item.activity_name, "FetchActivity", new object[item.activity_id]);
+                        </td>
+                    }
+
+
+                }
+            }
+
+        }
+    </tr>
+</table>
+
+
