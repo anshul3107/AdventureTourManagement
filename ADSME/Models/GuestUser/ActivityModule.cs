@@ -1,4 +1,5 @@
 ﻿using ADSM.Interface;
+using ADSM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,14 @@ namespace ADSM.Models.GuestUser
             this._serviceRecentlyBought = serviceRB;
             this._serviceRecommended = serviceRA;
         }
-        public IDictionary<string, List<dynamic>> GetActivities(int region_id = 0)
+        public IDictionary<string, List<ShowActivity>> GetActivities(int region_id = 0)
         {
 
-            IDictionary<string, List<dynamic>> data = new Dictionary<string, List<dynamic>>();
-
+            IDictionary<string, List<ShowActivity>> data = new Dictionary<string, List<ShowActivity>>();
 
             try
             {
-                
-                
-                    var saActivity = _serviceSeasonal.GetActivity();
+                var saActivity = _serviceSeasonal.GetActivity();
                 if (saActivity != null)
                     data.Add("SA", saActivity);
 
@@ -43,8 +41,7 @@ namespace ADSM.Models.GuestUser
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return data;

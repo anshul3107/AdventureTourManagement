@@ -8,6 +8,13 @@ namespace ADSM.ViewModels
 {
     public class VMActivity
     {
-        public IDictionary<string,List<Activities>> Activities { get; set; }
+        public IDictionary<string,List<ShowActivity>> Activities { get; set; }
+    }
+
+    public class ShowActivity
+    {
+        public int activity_id { get; set; }
+        public string activity_name { get; set; }
+
     }
 }

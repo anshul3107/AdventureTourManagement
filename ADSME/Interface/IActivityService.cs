@@ -1,4 +1,5 @@
 ﻿using ADSM.Models;
+using ADSM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace ADSM.Interface
 {
     public interface IActivityService
     {
-        List<dynamic> GetActivity(string region = null);
+        List<ShowActivity> GetActivity(string region = null);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ADSM.Interface;
 using ADSM.Models;
+using ADSM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,17 @@ using System.Web;
 
 namespace ADSM.Models.GuestUser
 {
+
     public class SeasonalActivities : IActivityService
     {
-        List<dynamic> IActivityService.GetActivity(string region)
+        List<ShowActivity> IActivityService.GetActivity(string region)
         {
-            var response = new List<dynamic>();
+            var response = new List<ShowActivity>();
             try
             {
                 ADSMDbContext dbContext = new ADSMDbContext();
-                var booked_activities = dbContext.Bookings.Select(x => x);
-                var activities = dbContext.Activities.Select(x => x);
+                var booked_activities = dbContext.Bookings.Select(x => x).ToList();
+                var activities = dbContext.Activities.Select(x => x).ToList();
 
                 //    #region Seasonal trends
                 // list of activities
@@ -24,34 +26,31 @@ namespace ADSM.Models.GuestUser
 
                 // list of bookings 
 
-                var activitiesBooked = booked_activities.Join(activities, x => x.activity_id, y => y.activity_id, (x, y) => new { activities = y, booking = x });
+                var activitiesBooked = booked_activities.Join(activities, x => x.activity_id, y => y.activity_id, (x, y) => new { activities = y, booking = x }).ToList();
 
-                var seasonalActivity = activitiesBooked.Select(x => new SeasonalActivity { activities = x.activities, booking_id = x.booking.booking_id, season = GetSeason(x.booking.booking_date) });
+                var seasonalActivity = activitiesBooked.Select(x => new SeasonalActivity { activities = x.activities, booking_id = x.booking.booking_id, season = GetSeason(x.booking.booking_date) }).ToList();
 
-                var seasonalActivitiesgrouped = from a in seasonalActivity
+                var seasonalActivitiesgrouped = (from a in seasonalActivity
                                                 group a by new { activityID = a.activities.activity_id, season = a.season } into x
-                                                select new { activityId = x.Key.activityID, activityCount = x.Count(), activitySeason = x.Key.season };
+                                                select new { activityId = x.Key.activityID, activityCount = x.Count(), activitySeason = x.Key.season }).AsEnumerable();
 
-                var activitySeason = seasonalActivitiesgrouped.Join(seasonalActivity, x => x.activityId, y => y.activities.activity_id, (x, y) => new { y.activities.activity_name, y.season, x.activityCount });
+                var activitySeason = seasonalActivitiesgrouped.Join(seasonalActivity, x => x.activityId, y => y.activities.activity_id, (x, y) => new { y.activities.activity_name,y.activities.activity_id, y.season, x.activityCount }).ToList();
 
-                var topSeasonalActivity = activitySeason.OrderByDescending(x => x.activityCount).Take(3);
+                var topSeasonalActivity = activitySeason.OrderByDescending(x => x.activityCount).Take(3).ToList();
 
-                response = topSeasonalActivity.ToList<dynamic>();
+                List<ShowActivity> aresult = new List<ShowActivity>();
+                foreach (var item in topSeasonalActivity)
+                {
+                    ShowActivity activityItem = new ShowActivity();
+                    activityItem.activity_id = item.activity_id;
+                    activityItem.activity_name = item.activity_name;
+                    //activityItem.ActivityAvgRating = item.avgrating;
+                    //activityItem.ActivityFee = item.activity_fee;
+                    aresult.Add(activityItem);
+                }
 
-                // create a DTO booking -> activity id  , season 
+                response = aresult;
 
-                //booking id , activity id, date
-
-
-                // group basis purchase date
-
-                // create enum/switch case to identify seasonal purchases, june - aug = Summer; dec-feb = winter; mar-may = Spring; Sep-nov = Autumn
-
-                // identify seasons for atcivity
-
-                // group and identify top 3/5
-
-                //     #endregion
             }
             catch (Exception ex)
             {

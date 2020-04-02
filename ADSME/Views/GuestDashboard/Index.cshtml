@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/Master.cshtml";
 }
 
 <h2>Index</h2>
@@ -23,7 +22,7 @@
                     {
                 <td>
 
-                    @Html.ActionLink(item.activity_name,"FetchActivity",new object[item.activity_id]);
+                    @Html.ActionLink(item.activity_name,"FetchActivity",new {activity_id = item.activity_id });
                 </td>
                     }
                 }
@@ -45,7 +44,7 @@
                     {
                         <td>
 
-                            @Html.ActionLink(item.activity_name, "FetchActivity", new object[item.activity_id]);
+                            @Html.ActionLink(item.activity_name, "FetchActivity", new {item.activity_id });
                         </td>
                     }
                 }
@@ -67,7 +66,7 @@
                     {
                         <td>
 
-                            @Html.ActionLink(item.activity_name, "FetchActivity", new object[item.activity_id]);
+                            @Html.ActionLink(item.activity_name, "FetchActivity", new { item.activity_id });
                         </td>
                     }
 

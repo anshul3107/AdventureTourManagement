@@ -1,4 +1,5 @@
 ﻿using ADSM.Interface;
+using ADSM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,9 +11,9 @@ namespace ADSM.Models.GuestUser
 {
     public class RecommendedActivities : IActivityService
     {
-        public List<dynamic> GetActivity(string region = null)
+        public List<ShowActivity> GetActivity(string region = null)
         {
-            var response = new List<dynamic>();
+            var response = new List<ShowActivity>();
             try
             {
                 ADSMDbContext dbcontext = new ADSMDbContext();
@@ -36,15 +37,15 @@ namespace ADSM.Models.GuestUser
 
                 var recommActivityResult = topActivities.Join(activityRatingList, x => x.activity_id, y => y.activity_id, (x, y) => new { x.activity_id, x.avgrating, y.activity_name, y.activity_fee }).ToList();
 
-                List<dynamic> result = new List<dynamic>();
+                List<ShowActivity> result = new List<ShowActivity>();
                 foreach (var item in recommActivityResult)
                 {
-                    dynamic activityItem = new ExpandoObject();
-                    activityItem.ActivityID = item.activity_id;
-                    activityItem.ActivityName = item.activity_name;
-                    activityItem.ActivityAvgRating = item.avgrating;
-                    activityItem.ActivityFee = item.activity_fee;
-                    result.Add(item);
+                    ShowActivity activityItem = new ShowActivity();
+                    activityItem.activity_id = item.activity_id;
+                    activityItem.activity_name = item.activity_name;
+                    //activityItem.ActivityAvgRating = item.avgrating;
+                    //activityItem.ActivityFee = item.activity_fee;
+                    result.Add(activityItem);
                 }
                 response = result;
             }

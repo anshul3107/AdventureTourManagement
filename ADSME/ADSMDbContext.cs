@@ -37,6 +37,9 @@ namespace ADSM
             modelBuilder.Entity<Models.User_Details>().ToTable("User_Details");
             modelBuilder.Entity<Models.Activities>().ToTable("Activity");
             modelBuilder.Entity<Models.ActivityRatings>().ToTable("ActivityRating");
+            modelBuilder.Entity<Models.Bookings>().ToTable("Booking");
+            modelBuilder.Entity<Models.Packages>().ToTable("Package");
+            modelBuilder.Entity<Models.Regions>().ToTable("Region");
 
         }
 

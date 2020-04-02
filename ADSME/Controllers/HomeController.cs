@@ -96,6 +96,10 @@ namespace ADSM.Controllers
             return View();
         }
 
+        public ActionResult GuestDashboard()
+        {
+            return View(); 
+        }
       
 
     }

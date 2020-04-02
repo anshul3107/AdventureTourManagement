@@ -555,6 +555,9 @@
     <Compile Include="Interface\IActivityService.cs" />
     <Compile Include="Models\DbModel\ActivityRatings.cs" />
     <Compile Include="Models\DbModel\Activities.cs" />
+    <Compile Include="Models\DbModel\Packages.cs" />
+    <Compile Include="Models\DbModel\Regions.cs" />
+    <Compile Include="Models\DbModel\UserDetails.cs" />
     <Compile Include="Models\GuestUser\ActivityModule.cs" />
     <Compile Include="Models\GuestUser\RecentlyBoughtActivities.cs" />
     <Compile Include="Models\GuestUser\RecommendedActivities.cs" />
