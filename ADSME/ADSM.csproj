@@ -543,7 +543,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="DefaultDependencyResolver.cs" />
     <Compile Include="IAppBuilder.cs" />
-    <Compile Include="Interface\IActivity.cs" />
+    <Compile Include="Interface\IActivityAction.cs" />
     <Compile Include="Models\DbModel\Bookings.cs" />
     <Compile Include="Controllers\GuestDashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -653,6 +653,7 @@
     <Content Include="Views\Home\Map.cshtml" />
     <Content Include="Views\GuestDashboard\GuestDashboard.cshtml" />
     <Content Include="Views\GuestDashboard\Index.cshtml" />
+    <Content Include="Views\GuestDashboard\FetchActivityDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

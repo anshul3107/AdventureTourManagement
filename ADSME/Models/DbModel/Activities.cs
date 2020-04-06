@@ -13,8 +13,7 @@ namespace ADSM.Models
         public string activity_name { get; set; }
         public int activity_slots { get; set; }
         public int activity_fee { get; set; }
+        public string activity_description { get; set; }
         public DateTime last_updated_on { get; set; }
-
-
     }
 }

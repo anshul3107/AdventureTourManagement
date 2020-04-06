@@ -20,12 +20,6 @@ namespace ADSM.Models.GuestUser
                 var booked_activities = dbContext.Bookings.Select(x => x).ToList();
                 var activities = dbContext.Activities.Select(x => x).ToList();
 
-                //    #region Seasonal trends
-                // list of activities
-                // var winter_activities = booked_activities.Where(x => (x.booking_date.Month <2 && x.booking_date.Month ));
-
-                // list of bookings 
-
                 var activitiesBooked = booked_activities.Join(activities, x => x.activity_id, y => y.activity_id, (x, y) => new { activities = y, booking = x }).ToList();
 
                 var seasonalActivity = activitiesBooked.Select(x => new SeasonalActivity { activities = x.activities, booking_id = x.booking.booking_id, season = GetSeason(x.booking.booking_date) }).ToList();

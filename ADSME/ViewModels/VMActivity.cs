@@ -15,6 +15,8 @@ namespace ADSM.ViewModels
     {
         public int activity_id { get; set; }
         public string activity_name { get; set; }
-
+        public int activity_slots { get; set; }
+        public int activity_fee { get; set; }
+        public string activity_description { get; set; }
     }
 }

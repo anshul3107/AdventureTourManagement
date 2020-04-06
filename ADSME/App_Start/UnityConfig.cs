@@ -46,10 +46,10 @@ namespace ADSM
             container.RegisterType<IActivityService, SeasonalActivities>("SA");
             container.RegisterType<IActivityService, RecommendedActivities>("RA");
             container.RegisterType<IActivityService, RecentlyBoughtActivities>("RB");
-            container.RegisterType<IActivity,ActivityModule>(new InjectionConstructor(new ResolvedParameter<IActivityService>("SA"),
+            container.RegisterType<IActivityAction,ActivityModule>(new InjectionConstructor(new ResolvedParameter<IActivityService>("SA"),
                new ResolvedParameter<IActivityService>("RB")
                , new ResolvedParameter<IActivityService>("RA")));
-            container.RegisterType<GuestDashboardController>(new InjectionConstructor(new ResolvedParameter<IActivity>()));
+            container.RegisterType<GuestDashboardController>(new InjectionConstructor(new ResolvedParameter<IActivityAction>()));
             
         }
     }

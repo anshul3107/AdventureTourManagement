@@ -7,11 +7,14 @@ using System.Web;
 
 namespace ADSM.Models.GuestUser
 {
-    public class ActivityModule : IActivity
+    public class ActivityModule : IActivityAction
     {
         private IActivityService _serviceRecentlyBought;
         private IActivityService _serviceRecommended;
         private IActivityService _serviceSeasonal;
+
+        ADSMDbContext dbContext = new ADSMDbContext();
+
 
         public ActivityModule(IActivityService serviceSA,IActivityService serviceRB, IActivityService serviceRA) //Func<string, IActivityService> serviceResolver))
         {
@@ -19,6 +22,7 @@ namespace ADSM.Models.GuestUser
             this._serviceRecentlyBought = serviceRB;
             this._serviceRecommended = serviceRA;
         }
+
         public IDictionary<string, List<ShowActivity>> GetActivities(int region_id = 0)
         {
 
@@ -30,7 +34,7 @@ namespace ADSM.Models.GuestUser
                 if (saActivity != null)
                     data.Add("SA", saActivity);
 
-                var raActivity = _serviceSeasonal.GetActivity();
+                var raActivity = _serviceRecommended.GetActivity();
                 if (raActivity != null)
                     data.Add("RA", raActivity);
 
@@ -45,6 +49,35 @@ namespace ADSM.Models.GuestUser
             }
 
             return data;
+        }
+
+        public List<Activities> BuyActivity(int activity_id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConfirmOrder(int activity_id, string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Activities GetActivityDetailByID(int activity_id)
+        {
+            var activity_details_result = dbContext.Activities.Select(x => x).Where(x => x.activity_id == activity_id).FirstOrDefault();
+
+            return activity_details_result;
+        }
+
+        public List<Activities> GetAllActivities()
+        {
+            var all_activities = dbContext.Activities.Select(x => x).ToList();
+
+            return all_activities;
+        }
+
+        public ActivityRatings RateActivity(int activity_id, string username, int activity_rating)
+        {
+            throw new NotImplementedException();
         }
     }
     
