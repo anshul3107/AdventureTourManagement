@@ -10,7 +10,7 @@ namespace ADSM.Interface
 {
    public interface IActivityAction
     {
-        IDictionary<string, List<ShowActivity>> GetActivities(int region_id = 0);
+        IDictionary<string, List<VMActivityDetails>> GetActivities(int region_id = 0);
         Activities GetActivityDetailByID(int activity_id);
         List<Activities> GetAllActivities();
         List<Activities> BuyActivity(int activity_id);

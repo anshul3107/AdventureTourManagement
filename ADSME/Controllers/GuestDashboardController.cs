@@ -27,44 +27,24 @@ namespace ADSM.Controllers
             return this.View(vmactivity);
         }
 
-        public ActionResult FetchActivityDetails(int activity_id)
+        public ActionResult FetchActivity(int activity_id)
         {
-           var activity_result = _service.GetActivityDetailByID(activity_id);
-            ShowActivity fetchActivity = new ShowActivity();
-            fetchActivity.activity_description = activity_result.activity_description;
-            fetchActivity.activity_fee = activity_result.activity_fee;
-            fetchActivity.activity_name = activity_result.activity_name;
-            fetchActivity.activity_slots = activity_result.activity_slots;
-            fetchActivity.activity_id = activity_result.activity_id;
+           var activity = _service.GetActivityDetailByID(activity_id);
 
+            VMListActivities fetchActivity = new VMListActivities();
+            fetchActivity.ShowActivityList(activity);
             return this.View(fetchActivity);
         }
 
         public ActionResult FetchAllActivity ()
         {
-            // fetch relevant all activities, 
             var allActivities = _service.GetAllActivities();
-            ShowActivity vmAllActivities = new ShowActivity();
 
-            foreach (var act in allActivities)
-            {
-                vmAllActivities.activity_description = act.activity_description;
-                vmAllActivities.activity_id = act.activity_id;
-                vmAllActivities.activity_fee = act.activity_fee;
-                vmAllActivities.activity_name = act.activity_name;
-                vmAllActivities.activity_slots = act.activity_slots;
-            }
+            VMListActivities fetchAllActivities = new VMListActivities();
+            fetchAllActivities.ShowAllActivityList(allActivities);
 
-            return View(vmAllActivities);
+            return this.View(fetchAllActivities);
         }
-
-        // 
-        //public ActionResult ShowActivityDetails(int activity_id)
-        //{
-        //    // fetch activity details
-        //    var activityDetails = _service.
-        //    return View();
-        //}
 
         //activity page --> details buy now
         //Registered user rating option on homepage

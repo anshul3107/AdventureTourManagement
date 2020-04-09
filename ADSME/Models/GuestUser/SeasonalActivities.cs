@@ -11,9 +11,9 @@ namespace ADSM.Models.GuestUser
 
     public class SeasonalActivities : IActivityService
     {
-        List<ShowActivity> IActivityService.GetActivity(string region)
+        List<VMActivityDetails> IActivityService.GetActivity(string region)
         {
-            var response = new List<ShowActivity>();
+            var response = new List<VMActivityDetails>();
             try
             {
                 ADSMDbContext dbContext = new ADSMDbContext();
@@ -32,10 +32,10 @@ namespace ADSM.Models.GuestUser
 
                 var topSeasonalActivity = activitySeason.OrderByDescending(x => x.activityCount).Take(3).ToList();
 
-                List<ShowActivity> aresult = new List<ShowActivity>();
+                List<VMActivityDetails> aresult = new List<VMActivityDetails>();
                 foreach (var item in topSeasonalActivity)
                 {
-                    ShowActivity activityItem = new ShowActivity();
+                    VMActivityDetails activityItem = new VMActivityDetails();
                     activityItem.activity_id = item.activity_id;
                     activityItem.activity_name = item.activity_name;
                     //activityItem.ActivityAvgRating = item.avgrating;

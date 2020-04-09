@@ -1,0 +1,17 @@
+﻿@model ADSM.ViewModels.VMListActivities
+
+@{
+    ViewBag.Title = "FetchActivity";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>Activity Details based on Selection from Trend</h2>
+@{ 
+    var data = Model.showActivities;
+
+    foreach (var item in data)
+    {
+        @Html.Label(item.activity_name)
+    }
+
+}

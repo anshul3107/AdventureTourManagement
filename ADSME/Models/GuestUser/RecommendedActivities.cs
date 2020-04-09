@@ -11,9 +11,9 @@ namespace ADSM.Models.GuestUser
 {
     public class RecommendedActivities : IActivityService
     {
-        public List<ShowActivity> GetActivity(string region = null)
+        public List<VMActivityDetails> GetActivity(string region = null)
         {
-            var response = new List<ShowActivity>();
+            var response = new List<VMActivityDetails>();
             try
             {
                 ADSMDbContext dbcontext = new ADSMDbContext();
@@ -37,10 +37,10 @@ namespace ADSM.Models.GuestUser
 
                 var recommActivityResult = topActivities.Join(activityRatingList, x => x.activity_id, y => y.activity_id, (x, y) => new { x.activity_id, x.avgrating, y.activity_name, y.activity_fee }).ToList();
 
-                List<ShowActivity> result = new List<ShowActivity>();
+                List<VMActivityDetails> result = new List<VMActivityDetails>();
                 foreach (var item in recommActivityResult)
                 {
-                    ShowActivity activityItem = new ShowActivity();
+                    VMActivityDetails activityItem = new VMActivityDetails();
                     activityItem.activity_id = item.activity_id;
                     activityItem.activity_name = item.activity_name;
                     //activityItem.ActivityAvgRating = item.avgrating;

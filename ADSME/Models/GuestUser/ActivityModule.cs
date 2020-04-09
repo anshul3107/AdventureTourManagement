@@ -15,7 +15,6 @@ namespace ADSM.Models.GuestUser
 
         ADSMDbContext dbContext = new ADSMDbContext();
 
-
         public ActivityModule(IActivityService serviceSA,IActivityService serviceRB, IActivityService serviceRA) //Func<string, IActivityService> serviceResolver))
         {
             this._serviceSeasonal = serviceSA;
@@ -23,10 +22,10 @@ namespace ADSM.Models.GuestUser
             this._serviceRecommended = serviceRA;
         }
 
-        public IDictionary<string, List<ShowActivity>> GetActivities(int region_id = 0)
+        public IDictionary<string, List<VMActivityDetails>> GetActivities(int region_id = 0)
         {
 
-            IDictionary<string, List<ShowActivity>> data = new Dictionary<string, List<ShowActivity>>();
+            IDictionary<string, List<VMActivityDetails>> data = new Dictionary<string, List<VMActivityDetails>>();
 
             try
             {
@@ -70,9 +69,9 @@ namespace ADSM.Models.GuestUser
 
         public List<Activities> GetAllActivities()
         {
-            var all_activities = dbContext.Activities.Select(x => x).ToList();
+            var all_activities_result = dbContext.Activities.Select(x => x).ToList();
 
-            return all_activities;
+            return all_activities_result;
         }
 
         public ActivityRatings RateActivity(int activity_id, string username, int activity_rating)

@@ -10,6 +10,6 @@ namespace ADSM.Interface
 {
     public interface IActivityService
     {
-        List<ShowActivity> GetActivity(string region = null);
+        List<VMActivityDetails> GetActivity(string region = null);
     }
 }

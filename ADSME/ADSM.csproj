@@ -653,7 +653,8 @@
     <Content Include="Views\Home\Map.cshtml" />
     <Content Include="Views\GuestDashboard\GuestDashboard.cshtml" />
     <Content Include="Views\GuestDashboard\Index.cshtml" />
-    <Content Include="Views\GuestDashboard\FetchActivityDetails.cshtml" />
+    <Content Include="Views\GuestDashboard\FetchActivity.cshtml" />
+    <Content Include="Views\GuestDashboard\FetchAllActivity.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,9 +9,9 @@ namespace ADSM.Models.GuestUser
 {
     public class RecentlyBoughtActivities : IActivityService
     {
-       public List<ShowActivity> GetActivity(string region)
+       public List<VMActivityDetails> GetActivity(string region)
         {
-            var response = new List<ShowActivity>();
+            var response = new List<VMActivityDetails>();
             try
             {
                 ADSMDbContext dbContext = new ADSMDbContext();
@@ -26,10 +26,10 @@ namespace ADSM.Models.GuestUser
                 var activityNames = activities_result.Join(recent_activities, x => new { ActivityID = x.activity_id },
                     y => new { ActivityID = y.activity_id }, (x, y) => new { x.activity_name,x.activity_id });
 
-                List<ShowActivity> aresult = new List<ShowActivity>();
+                List<VMActivityDetails> aresult = new List<VMActivityDetails>();
                 foreach (var item in activityNames)
                 {
-                    ShowActivity activityItem = new ShowActivity();
+                    VMActivityDetails activityItem = new VMActivityDetails();
                     activityItem.activity_id = item.activity_id;
                     activityItem.activity_name = item.activity_name;
                     //activityItem.ActivityAvgRating = item.avgrating;
