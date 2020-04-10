@@ -6,12 +6,59 @@
 }
 
 <h2>Activity Details based on Selection from Trend</h2>
-@{ 
+@{
     var data = Model.showActivities;
 
     foreach (var item in data)
     {
-        @Html.Label(item.activity_name)
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <h3> Recommended Activities </h3>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                @Html.Label(item.activity_name)
+                            </td>
+                            <td>
+                                @Html.Label(item.activity_description)
+                            </td>
+                            <td>
+                                @Html.Label(item.activity_fee.ToString())
+                            </td>
+                            <td>
+                                @Html.Label(item.activity_slots.ToString())
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+         </div>
     }
+<table>
+    <tr>
+        <td>
+            @Html.ActionLink("Buy Now", "Checkout")
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.ActionLink("Add to Cart", "ShoppingCart")
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.ActionLink("Go Back", "Index")
+        </td>
+    </tr>
+</table>
+    
 
 }

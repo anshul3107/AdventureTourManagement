@@ -28,14 +28,14 @@ namespace ADSM.Models.GuestUser
 
 
                 // groupactivities basis ratings
-                var groupedactivities = activityRatingList.Select(x => new { x.activity_id, avgrating = activityRatingList.Where(y => y.activity_id == x.activity_id).Average(y => y.activity_rating) });
+                var groupedactivities = activityRatingList.Select(x => new { x.activity_id, x.activity_name,x.activity_fee, avgrating = activityRatingList.Where(y => y.activity_id == x.activity_id).Average(y => y.activity_rating) });//).GroupBy(y => y.activity_id);
 
                 // obtain top three/five results
-                var topActivities = groupedactivities.OrderByDescending(x => x.avgrating).Take(3);
+                var recommActivityResult = groupedactivities.Distinct().OrderByDescending(x => x.avgrating).Take(3);
 
-                var otherActivities = groupedactivities.Except(topActivities);
+                //var otherActivities = groupedactivities.Except(topActivities);
 
-                var recommActivityResult = topActivities.Join(activityRatingList, x => x.activity_id, y => y.activity_id, (x, y) => new { x.activity_id, x.avgrating, y.activity_name, y.activity_fee }).ToList();
+                //var recommActivityResult = topActivities.Join(groupedactivities, x => x.activity_id, y => y.activity_id, (x, y) => new { x.activity_id, x.avgrating, y.activity_name, y.activity_fee }).ToList();
 
                 List<VMActivityDetails> result = new List<VMActivityDetails>();
                 foreach (var item in recommActivityResult)

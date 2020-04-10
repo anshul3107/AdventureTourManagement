@@ -7,3 +7,58 @@
 
 <h2>List of All Available Activites</h2>
 
+@{
+    var data = Model.showActivities;
+
+
+
+    <div class="col-md-4">
+        <table class="table">
+            <tbody>
+                @{
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(item.activity_name,"")
+                                </td>
+                                <td>
+                                    @Html.Label(item.activity_description)
+                                </td>
+                                <td>
+                                    @Html.Label(item.activity_fee.ToString())
+                                </td>
+                                <td>
+                                    @Html.Label(item.activity_slots.ToString())
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <table>
+        <tr>
+            <td>
+                @Html.ActionLink("Buy Now", "")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Add to Cart", "")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Go Back", "Index")
+            </td>
+        </tr>
+    </table>
+}
+

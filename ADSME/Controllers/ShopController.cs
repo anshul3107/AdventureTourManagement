@@ -8,10 +8,20 @@ namespace ADSM.Controllers
 {
     public class ShopController : Controller
     {
-        // GET: Shop
-        public ActionResult Index()
+        public void Checkout()
         {
-            return View();
+            // page for details with submit button
+            // order confirmation 
+
+
+
         }
+
+        public void ShoppingCart()
+        {
+            //shopping cart library
+        }
+
+
     }
 }
