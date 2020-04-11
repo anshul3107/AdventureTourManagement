@@ -20,21 +20,26 @@
                     {
                         foreach (var item in data)
                         {
-                            <tr>
-                                <td>
-                                    @Html.ActionLink(item.activity_name,"")
-                                </td>
-                                <td>
-                                    @Html.Label(item.activity_description)
-                                </td>
-                                <td>
-                                    @Html.Label(item.activity_fee.ToString())
-                                </td>
-                                <td>
-                                    @Html.Label(item.activity_slots.ToString())
-                                </td>
-
-                            </tr>
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.activity_name, "")
+                                    </td>
+                                    <td>
+                                        @Html.Label(item.activity_description)
+                                    </td>
+                                    <td>
+                                        @Html.Label(item.activity_fee.ToString())
+                                    </td>
+                                    <td>
+                                        @Html.Label(item.activity_slots.ToString())
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Buy Now", "")
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Add to Cart", "")
+                                    </td>
+                                </tr>
                         }
                     }
                 }
@@ -44,16 +49,6 @@
     </div>
 
     <table>
-        <tr>
-            <td>
-                @Html.ActionLink("Buy Now", "")
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.ActionLink("Add to Cart", "")
-            </td>
-        </tr>
         <tr>
             <td>
                 @Html.ActionLink("Go Back", "Index")

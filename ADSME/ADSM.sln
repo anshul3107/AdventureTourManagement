@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSM", "ADSM.csproj", "{F0333EA2-21B3-4442-BF6D-F63C6C37B8F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSM.Lib", "..\ADSM.Lib\ADSM.Lib.csproj", "{5C9F7E30-868F-4DF7-BA42-7F4B4A415618}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSM.Lib_anshul", "..\ADSM.Lib\ADSM.Lib_anshul.csproj", "{5C9F7E30-868F-4DF7-BA42-7F4B4A415618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,7 +26,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
 		SolutionGuid = {2BC7BE1A-C977-4D35-AA99-8432CD7A09E0}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
