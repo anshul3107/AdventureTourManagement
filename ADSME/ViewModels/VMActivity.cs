@@ -19,6 +19,7 @@ namespace ADSM.ViewModels
         public int activity_fee { get; set; }
         public string activity_description { get; set; }
         public DateTime last_updated_on { get; set; }
+        public string activity_image_path { get; set; }
 
         public void Dispose()
         {
@@ -27,6 +28,7 @@ namespace ADSM.ViewModels
             activity_slots = 0;
             activity_fee = 0;
             activity_description = null;
+            activity_image_path = null;
         }
     }
 
@@ -41,16 +43,16 @@ namespace ADSM.ViewModels
             //{
 
             VMActivityDetails activityItem = new VMActivityDetails();
-                activityItem.activity_id = activity.activity_id;
-                activityItem.activity_name = activity.activity_name;
-                activityItem.activity_fee = activity.activity_fee;
-                activityItem.activity_slots = activity.activity_slots;
-                activityItem.activity_description = activity.activity_description;
+            activityItem.activity_id = activity.activity_id;
+            activityItem.activity_name = activity.activity_name;
+            activityItem.activity_fee = activity.activity_fee;
+            activityItem.activity_slots = activity.activity_slots;
+            activityItem.activity_description = activity.activity_description;
+            activityItem.activity_image_path = activity.activity_image_path;
 
-                result.Add(activityItem);
+            result.Add(activityItem);
             //}
 
-            
             this.showActivities = result;
         }
 
@@ -63,13 +65,13 @@ namespace ADSM.ViewModels
                 //using (VMActivityDetails activityDetails = new VMActivityDetails())
                 //{
                 VMActivityDetails activityDetails = new VMActivityDetails();
-                    activityDetails.activity_id = act.activity_id;
-                    activityDetails.activity_name = act.activity_name;
-                    activityDetails.activity_fee = act.activity_fee;
-                    activityDetails.activity_slots = act.activity_slots;
-                    activityDetails.activity_description = act.activity_description;
+                activityDetails.activity_id = act.activity_id;
+                activityDetails.activity_name = act.activity_name;
+                activityDetails.activity_fee = act.activity_fee;
+                activityDetails.activity_slots = act.activity_slots;
+                activityDetails.activity_description = act.activity_description;
 
-                    result.Add(activityDetails);
+                result.Add(activityDetails);
                 //}
             }
             this.showActivities = result;

@@ -15,5 +15,6 @@ namespace ADSM.Models
         public int activity_fee { get; set; }
         public string activity_description { get; set; }
         public DateTime last_updated_on { get; set; }
+        public string activity_image_path { get; set; }
     }
 }

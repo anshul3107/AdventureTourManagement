@@ -277,6 +277,17 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\image\ActivityImages\Archery.jpg" />
+    <Content Include="Content\image\ActivityImages\Bungyjump.jpg" />
+    <Content Include="Content\image\ActivityImages\Camping.jpg" />
+    <Content Include="Content\image\ActivityImages\Motorbiking.jpg" />
+    <Content Include="Content\image\ActivityImages\outdoor_race-track.jpg" />
+    <Content Include="Content\image\ActivityImages\PaintBall.jpg" />
+    <Content Include="Content\image\ActivityImages\Paragliding.jpg" />
+    <Content Include="Content\image\ActivityImages\recurve-bows.jpg" />
+    <Content Include="Content\image\ActivityImages\scuba.jpg" />
+    <Content Include="Content\image\ActivityImages\traditional-bows.jpg" />
+    <Content Include="Content\image\ActivityImages\windsurfing.jpg" />
     <Content Include="Content\image\Boostrap.svg" />
     <Content Include="Content\jquery-jvectormap-2.0.5.css" />
     <Content Include="Content\jquery-jvectormap-2.0.5.min.js" />
@@ -655,6 +666,7 @@
     <Content Include="Views\GuestDashboard\Index.cshtml" />
     <Content Include="Views\GuestDashboard\FetchActivity.cshtml" />
     <Content Include="Views\GuestDashboard\FetchAllActivity.cshtml" />
+    <Content Include="Views\Shop\Checkout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -666,7 +678,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Shop\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

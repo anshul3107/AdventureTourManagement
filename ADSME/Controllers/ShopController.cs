@@ -8,12 +8,12 @@ namespace ADSM.Controllers
 {
     public class ShopController : Controller
     {
-        public void Checkout()
+        public ActionResult Checkout()
         {
             // page for details with submit button
             // order confirmation 
 
-
+            return this.View();
 
         }
 

@@ -42,10 +42,13 @@ namespace ADSM.Controllers
 
             VMListActivities fetchAllActivities = new VMListActivities();
             fetchAllActivities.ShowAllActivityList(allActivities);
-
             return this.View(fetchAllActivities);
         }
 
+        public ActionResult Checkout()
+        {
+            return RedirectToAction("Checkout", "Shop");
+        }
         //activity page --> details buy now
         //Registered user rating option on homepage
         //ask for email and show message in case of an un-registered user.

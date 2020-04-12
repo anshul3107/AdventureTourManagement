@@ -11,49 +11,52 @@
     var data = Model.showActivities;
 
 
-
-    <div class="col-md-4">
-        <table class="table">
-            <tbody>
+        <div class="row">
+            <div>
                 @{
                     if (data != null)
                     {
                         foreach (var item in data)
                         {
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink(item.activity_name, "")
-                                    </td>
-                                    <td>
-                                        @Html.Label(item.activity_description)
-                                    </td>
-                                    <td>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.ActionLink(item.activity_name, "FetchActivity", new { activity_id = item.activity_id })
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label class="description">@item.activity_description</label>
+                                        @Html.DisplayText(item.activity_description)
+                                    </div>
+
+
+
+                                    <div class="col-md-1">
                                         @Html.Label(item.activity_fee.ToString())
-                                    </td>
-                                    <td>
+
+                                    </div>
+                                    <div class="col-md-1">
                                         @Html.Label(item.activity_slots.ToString())
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Buy Now", "")
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Add to Cart", "")
-                                    </td>
-                                </tr>
+                                    </div>
+
+                                    @Html.ActionLink("Buy Now", "Checkout")
+
+                                    @Html.ActionLink("Add to Cart", "")
+
+                                </div>
                         }
                     }
                 }
+            </div>
+                        </div>
 
-            </tbody>
-        </table>
-    </div>
 
-    <table>
-        <tr>
-            <td>
-                @Html.ActionLink("Go Back", "Index")
-            </td>
-        </tr>
-    </table>
-}
+            <table>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Go Back", "Index")
+                    </td>
+                </tr>
+            </table>
+            }
 
