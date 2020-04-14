@@ -8,6 +8,9 @@ namespace ADSM.Models.Shopping
 {
     public class ShoppingCart
     {
+        ADSMDbContext dbcontext = new ADSMDbContext();
+
+
     }
 
     public class ShoppingCartFactory : IFilterFactory

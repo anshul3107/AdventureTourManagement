@@ -50,7 +50,7 @@
 
                     <div class="col-md-6">
                         @*<img class="image" src="~/Content/image/ActivityImages/recurve-bows.jpg" alt="sometext" />*@
-                        <img class="image" src=@item.activity_image_path  alt="sometext" />
+                        <img class="image" src=@item.activity_image_path alt="sometext" />
 
                     </div>
                     <div class="col-md-6">
@@ -66,15 +66,19 @@
                             <span>Activity Slots</span>
                             <span>@Html.Label(item.activity_slots.ToString())</span>
                         </div>
-                        </div>
                     </div>
+                    <div>
+                        @Html.ActionLink("Buy Now", "Checkout", null, new { @class = "btn btn-info btn-activity" })
+                        @Html.ActionLink("Add to Cart", "ShoppingCart", null, new { @class = "btn btn-info btn-activity" })
+                    </div>
+                </div>
                 </div>
         </div>
     }
-    <div>
+    @*<div>
         @Html.ActionLink("Buy Now", "Checkout", null, new { @class = "btn btn-info btn-activity" })
         @Html.ActionLink("Add to Cart", "ShoppingCart", null, new { @class = "btn btn-info btn-activity" })
-    </div>
+    </div>*@
 
 
 }
