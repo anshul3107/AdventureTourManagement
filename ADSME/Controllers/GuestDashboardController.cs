@@ -45,9 +45,9 @@ namespace ADSM.Controllers
             return this.View(fetchAllActivities);
         }
 
-        public ActionResult Checkout()
+        public ActionResult GetUserDetails(int activity_id)
         {
-            return RedirectToAction("Checkout", "Shop");
+            return RedirectToAction("GetUserDetails", "Shop", new { activity_id = activity_id });
         }
         //activity page --> details buy now
         //Registered user rating option on homepage
