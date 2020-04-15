@@ -1,0 +1,11 @@
+\\Mac\Home\Documents\ADSM1\SecureAccess\bin\Debug\netcoreapp3.1\SecureAccess.deps.json
+\\Mac\Home\Documents\ADSM1\SecureAccess\bin\Debug\netcoreapp3.1\SecureAccess.dll
+\\Mac\Home\Documents\ADSM1\SecureAccess\bin\Debug\netcoreapp3.1\SecureAccess.pdb
+\\Mac\Home\Documents\ADSM1\SecureAccess\bin\Debug\netcoreapp3.1\EntityFramework.dll
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.csprojAssemblyReference.cache
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.csproj.CoreCompileInputs.cache
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.AssemblyInfoInputs.cache
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.AssemblyInfo.cs
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.csproj.CopyComplete
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.dll
+\\Mac\Home\Documents\ADSM1\SecureAccess\obj\Debug\netcoreapp3.1\SecureAccess.pdb
