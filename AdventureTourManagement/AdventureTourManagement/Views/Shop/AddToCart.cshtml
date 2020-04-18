@@ -1,0 +1,21 @@
+﻿@model AdventureTourManagement.ViewModels.ActivityCartDTO
+
+@{
+    ViewData["Title"] = "AddToCart";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                @Model.ActivityName has been added to the cart.
+            </h2>
+        </div>
+        <div class="col-md-6">
+            @Html.ActionLink("View Cart", "ViewShoppingCart","Shop",null,new { @class="btn btn-primary"})
+        </div>
+        <div class="col-md-6">
+            @Html.ActionLink("Continue Shopping", "FetchAllActivity", "GuestDashboard", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+

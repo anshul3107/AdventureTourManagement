@@ -1,4 +1,4 @@
-﻿@model ADSM.ViewModels.VMListActivities
+﻿@model AdventureTourManagement.ViewModels.VMListActivities
 
 @{
     ViewBag.Title = "FetchAllActivity";
@@ -39,9 +39,9 @@
                                         @Html.Label(item.activity_slots.ToString())
                                     </div>
 
-                                    @Html.ActionLink("Buy Now", "Checkout")
-
-                                    @Html.ActionLink("Add to Cart", "")
+                                    @Html.ActionLink("Buy Now", "BuyNowAsync", "Shop", new { activityId = item.activity_id })
+                                    
+                                    @Html.ActionLink("Add to Cart", "AddToCart", "Shop", new { activityId = item.activity_id })
 
                                 </div>
                         }

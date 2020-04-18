@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace ADSM.Models.Shopping
+namespace AdventureTourManagement.Models.Shopping
 {
     public class ShoppingCart
     {
-        ATMDbContext dbcontext = new ATMDbContext();
 
 
     }

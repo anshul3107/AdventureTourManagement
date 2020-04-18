@@ -1,8 +1,7 @@
-﻿using ADSM.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ADSM.Models
+namespace AdventureTourManagement.Models
 {
     public class ActivityRatings
     {

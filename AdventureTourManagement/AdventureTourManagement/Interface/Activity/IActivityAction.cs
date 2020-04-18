@@ -1,14 +1,11 @@
-﻿using ADSM.Models;
-using ADSM.ViewModels;
-using System;
+﻿using AdventureTourManagement.Models;
+using AdventureTourManagement.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Interface
 {
-   public interface IActivityAction
+    public interface IActivityAction
     {
         IDictionary<string, List<VMActivityDetails>> GetActivities(int region_id = 0);
         Activities GetActivityDetailByID(int activity_id);

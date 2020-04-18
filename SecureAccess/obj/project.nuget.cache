@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OlZVWgZSmFcPs+W+7ws8AyII9/8dYBXX1ec0vvVeAcIsbwoEN++nCKCmWVQh7ZG+1UFxbFMEyXDqM4fwEcqJSA==",
+  "dgSpecHash": "AcSu+HkR+hcZ8AYf1uV0uj8nxDeT3aPA70618vL1virJF3gTOQySrr6JdbYHYWlBWXD5GpBq7C6YQgff253B6Q==",
   "success": true,
-  "projectFilePath": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj",
+  "projectFilePath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.app\\2.1.0\\microsoft.netcore.app.2.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnetapphost\\2.1.0\\microsoft.netcore.dotnetapphost.2.1.0.nupkg.sha512",

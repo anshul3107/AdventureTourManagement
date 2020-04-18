@@ -1,10 +1,8 @@
-﻿using ADSM.Models;
+﻿using AdventureTourManagement.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace ADSM.ViewModels
+namespace AdventureTourManagement.ViewModels
 {
     public class VMActivity
     {
@@ -20,6 +18,7 @@ namespace ADSM.ViewModels
         public string activity_description { get; set; }
         public DateTime last_updated_on { get; set; }
         public string activity_image_path { get; set; }
+        public string activity_season { get; set; }
 
         public void Dispose()
         {

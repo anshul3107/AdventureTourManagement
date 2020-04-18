@@ -1,12 +1,10 @@
-﻿using ADSM.Interface;
-using ADSM.ViewModels;
+﻿using AdventureTourManagement.Interface;
+using AdventureTourManagement.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Web;
 
-namespace ADSM.Models.GuestUser
+namespace AdventureTourManagement.Models.GuestUser
 {
     public class RecommendedActivities : IActivityService
     {

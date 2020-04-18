@@ -7,46 +7,36 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using SecureAccess.Model;
+using SecureAccess.Service;
 
 namespace SecureAccess.Helper
 {
-    public class EmailAuthenticate
+    public  class EmailAuthenticate
     {
-        public async System.Threading.Tasks.Task<Guid> SendEmailAsync(Model.AuthenticationInput input)
+        public async Task<Guid> SendAuthenticationEmail(AuthenticationInput input)
         {
-            Guid transactId = Guid.Empty;
+            EmailDTO messageDTO = new EmailDTO();
+            var transactId = Guid.NewGuid();
 
-            try
-            {
-                MailMessage message = new MailMessage();
-                message.To.Add(input.Receiver);
-                message.Subject = input.Subject;
+            if (input.AuthenticationMode == Constants.AuthneticationMode.WebBasedAuthentication)
+                messageDTO.MailMessage = await MailTextAsync(input.AuthenticationMode, transactId, input.VerificationLink);
+            else
+                messageDTO.MailMessage = await MailTextAsync(input.AuthenticationMode, transactId);
 
-                transactId = Guid.NewGuid();
+            messageDTO.MailSubject = input.Subject;
+            messageDTO.MailTo = input.Receiver;
 
-                if (input.AuthenticationMode == Constants.AuthneticationMode.WebBasedAuthentication)
-                    message.Body = MailText(input.AuthenticationMode, transactId, input.VerificationLink);
-                else
-                    message.Body = MailText(input.AuthenticationMode, transactId);
-
-                SmtpClient client = new SmtpClient(Constants.PROVIDER);
-                var credentials = (await File.ReadAllLinesAsync(Constants.SA_CONNECT)).ToList();
-
-                client.Credentials = new NetworkCredential(credentials[0], credentials[1]);
-
-                await client.SendMailAsync(message);
-
-            }
-            catch (Exception ep)
-            {
-                Console.WriteLine("failed to send email with the following error:");
-                Console.WriteLine(ep.Message);
-            }
+            SendCommunications comms = new SendCommunications();
+            await comms.SendEmail(messageDTO);
 
             return transactId;
+
         }
 
-        private string MailText(Constants.AuthneticationMode mode,Guid transactID, string url = null)
+
+        private async Task<string> MailTextAsync(Constants.AuthneticationMode mode,Guid transactID, string url = null)
         {
             string result = string.Empty;
             
@@ -56,7 +46,7 @@ namespace SecureAccess.Helper
                 var token = random.Next(Constants.TMNRANGE, Constants.TMXRANGE);
 
                 result = string.Format("Please use below token to confirm email verification. {0}", token);
-                CreateEncryptedFile(token.ToString());
+               await CreateEncryptedFileAsync(token.ToString(),transactID);
             }
             else
             {
@@ -67,10 +57,8 @@ namespace SecureAccess.Helper
 
         }
 
-        private Guid CreateEncryptedFile(string token)
+        private async Task CreateEncryptedFileAsync(string token, Guid transactionId)
         {
-            Guid transactionId = Guid.NewGuid();
-
             EncryptionDecryption coded = new EncryptionDecryption();
 
             string eToken = coded.EncryptText(token,"encryptionKey");
@@ -84,12 +72,11 @@ namespace SecureAccess.Helper
             
             if (! File.Exists(filepath))
             {
-                File.WriteAllTextAsync(filepath, eToken);
+               await File.WriteAllTextAsync(filepath, eToken);
             }
 
-            coded.FileEncryption(filepath);
+           // coded.FileEncryption(filepath);
 
-            return transactionId;
         }
     }
 }

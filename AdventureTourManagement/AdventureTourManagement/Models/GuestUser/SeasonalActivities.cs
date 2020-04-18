@@ -1,12 +1,10 @@
-﻿using ADSM.Interface;
-using ADSM.Models;
-using ADSM.ViewModels;
+﻿using AdventureTourManagement.Interface;
+using AdventureTourManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
-namespace ADSM.Models.GuestUser
+namespace AdventureTourManagement.Models.GuestUser
 {
 
     public class SeasonalActivities : IActivityService
@@ -15,9 +13,7 @@ namespace ADSM.Models.GuestUser
         public SeasonalActivities(ATMDbContext dbContext)
         {
             this.dbContext = dbContext;
-
         }
-
 
         List<VMActivityDetails> IActivityService.GetActivity(string region)
         {
@@ -31,11 +27,15 @@ namespace ADSM.Models.GuestUser
 
                 var seasonalActivity = activitiesBooked.Select(x => new SeasonalActivity { activities = x.activities, booking_id = x.booking.booking_id, season = GetSeason(x.booking.booking_date) }).ToList();
 
-                var seasonalActivitiesgrouped = (from a in seasonalActivity
-                                                group a by new { activityID = a.activities.activity_id, season = a.season } into x
-                                                select new { activityId = x.Key.activityID, activityCount = x.Count(), activitySeason = x.Key.season }).AsEnumerable();
+                var currentSEason = GetSeason(DateTime.Now);
 
-                var activitySeason = seasonalActivitiesgrouped.Join(seasonalActivity, x => x.activityId, y => y.activities.activity_id, (x, y) => new { y.activities.activity_name,y.activities.activity_id, y.season, x.activityCount }).ToList();
+                seasonalActivity = seasonalActivity.Where(x => x.season == currentSEason).ToList();
+
+                var seasonalActivitiesgrouped = (from a in seasonalActivity
+                                                 group a by new { activityID = a.activities.activity_id, season = a.season } into x
+                                                 select new { activityId = x.Key.activityID, activityCount = x.Count(), activitySeason = x.Key.season }).AsEnumerable();
+
+                var activitySeason = seasonalActivitiesgrouped.Join(seasonalActivity, x => x.activityId, y => y.activities.activity_id, (x, y) => new { y.activities.activity_name, y.activities.activity_id, y.season, x.activityCount }).ToList();
 
                 var topSeasonalActivity = activitySeason.OrderByDescending(x => x.activityCount).Take(3).ToList();
 
@@ -47,11 +47,11 @@ namespace ADSM.Models.GuestUser
                     activityItem.activity_name = item.activity_name;
                     //activityItem.ActivityAvgRating = item.avgrating;
                     //activityItem.ActivityFee = item.activity_fee;
+                    activityItem.activity_season = item.season;
                     aresult.Add(activityItem);
                 }
 
                 response = aresult;
-
             }
             catch (Exception ex)
             {

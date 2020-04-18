@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj": {}
+    "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj": {}
   },
   "projects": {
-    "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj": {
+    "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj",
         "projectName": "SecureAccess",
-        "projectPath": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj",
         "packagesPath": "C:\\Users\\anshul\\.nuget\\packages\\",
-        "outputPath": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\obj\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

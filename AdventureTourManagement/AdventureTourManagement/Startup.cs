@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ADSM;
-using ADSM.Interface;
-using ADSM.Models.GuestUser;
+using AdventureTourManagement.Interface;
+using AdventureTourManagement.Interface.Shopping;
+using AdventureTourManagement.Models.GuestUser;
+using AdventureTourManagement.Models.Shopping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +40,8 @@ namespace AdventureTourManagement
             services.AddScoped<SeasonalActivities>();
             services.AddScoped<RecommendedActivities>();
 
+            services.AddScoped<IShopping, ShoppingService>();
+
             services.AddScoped<Func<string,IActivityService>>(serviceProvider => key =>
             {
                 switch (key)
@@ -59,7 +59,16 @@ namespace AdventureTourManagement
 
             services.AddScoped<IActivityAction, ActivityModule>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureTourManagement.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(60);
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
 
         }
 
@@ -79,7 +88,7 @@ namespace AdventureTourManagement
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

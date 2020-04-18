@@ -1,9 +1,10 @@
-﻿
-using ADSM.Models;
-using ADSM.ViewModels;
+﻿using AdventureTourManagement.Interface;
+using AdventureTourManagement.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace ADSM.Controllers
+namespace AdventureTourManagement.Controllers
 {
     public class GuestDashboardController : Controller
     {
@@ -17,7 +18,10 @@ namespace ADSM.Controllers
         // GET: GuestDashboard
         public ActionResult Index()
         {
-            var listofActivities = _service.GetActivities();//send region id
+            HttpContext.Session.SetString("CurrentUser", Guid.NewGuid().ToString());
+            HttpContext.Session.CommitAsync().Wait();
+
+            var listofActivities = _service.GetActivities(); //send region id
             VMActivity vmactivity = new VMActivity();
             vmactivity.Activities = listofActivities;
             return this.View(vmactivity);
@@ -25,6 +29,11 @@ namespace ADSM.Controllers
 
         public ActionResult FetchActivity(int activity_id)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                HttpContext.Session.SetString("CurrentUser", Guid.NewGuid().ToString());
+            }
+
             var activity = _service.GetActivityDetailByID(activity_id);
 
             VMListActivities fetchActivity = new VMListActivities();
@@ -34,19 +43,16 @@ namespace ADSM.Controllers
 
         public ActionResult FetchAllActivity()
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                HttpContext.Session.SetString("CurrentUser", Guid.NewGuid().ToString());
+            }
+
             var allActivities = _service.GetAllActivities();
 
             VMListActivities fetchAllActivities = new VMListActivities();
             fetchAllActivities.ShowAllActivityList(allActivities);
             return this.View(fetchAllActivities);
         }
-
-        public ActionResult GetUserDetails(int activity_id)
-        {
-            return RedirectToAction("GetUserDetails", "Shop", new { activity_id = activity_id });
-        }
-        //activity page --> details buy now
-        //Registered user rating option on homepage
-        //ask for email and show message in case of an un-registered user.
     }
 }

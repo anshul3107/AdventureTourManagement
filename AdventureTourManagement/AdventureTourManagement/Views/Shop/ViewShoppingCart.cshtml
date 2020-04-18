@@ -1,0 +1,86 @@
+﻿@model AdventureTourManagement.ViewModels.VMActivityCart
+
+@{
+    ViewData["Title"] = "ViewShoppingCart";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>ViewShoppingCart</h2>
+
+<table width="100%">
+    <tr>
+        <td width="70%">
+
+            <table>
+                @{
+                    if (Model.CartItem != null && Model.CartItem.Count > 0)
+                    {
+                        foreach (var item in Model.CartItem)
+                        {
+                        <tr>
+                            <td>
+                                <div style="border-width:thin;border-color:black;border-style:solid;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img src=@item.ActivityImage alt=@item.ActivityName width="50" height="50">
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2" align="center">
+                                                            <b>@item.ActivityName</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Qty: @item.Quantity
+                                                        </td>
+                                                        <td>
+                                                            €@item.ActivityFee
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" align="right">
+                                                            @Html.ActionLink("Remove From cart", "DeleteFromCart", "Shop", new { item.ActivityID }, new { @class = "btn btn-danger" })
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br />
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <label style="color:red;">No items in cart</label>
+
+                                @Html.ActionLink("Continue Shopping", "FetchAllActivity", "GuestDashboard", null, new { @class = "btn btn-primary" })
+                            </td>
+                        </tr>
+                    }
+                    }
+
+            </table>
+        </td>
+        <td width="30%">
+            <div style="vertical-align:top;">
+                @{
+                    if (Model.CartItem != null && Model.CartItem.Count > 0)
+                    {
+
+                        @Html.ActionLink("Place Order", "GetUserDetails", "Shop", null, new { @class = "btn btn-primary" })
+                    }
+                }
+            </div>
+        </td>
+    </tr>
+</table>
+
+

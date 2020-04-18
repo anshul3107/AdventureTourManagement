@@ -1,74 +1,174 @@
-﻿using ADSM.ViewModels;
+﻿using AdventureTourManagement.Interface.Shopping;
+using AdventureTourManagement.Models;
+using AdventureTourManagement.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SecureAccess;
 using SecureAccess.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-//using SecureAccess;
-//using SecureAccess.Interface;
-//using SecureAccess.Model;
 
-namespace ADSM.Controllers
+namespace AdventureTourManagement.Controllers
 {
     public class ShopController : Controller
     {
-        public ActionResult Checkout()
-        {
-            // validate email
-            //page for details with submit button
-            // order confirmation 
+        IShopping _shopping;
 
-            return this.View();
+        public ShopController(IShopping shopping)
+        {
+            _shopping = shopping;
         }
 
-        Task<Guid> tokenId;
-
-        public ActionResult GetUserDetails(int activity_id)
+        // buy Now
+        // Place order
+        public ActionResult GetUserDetails()
         {
-            VMUserDetail user_details = new VMUserDetail();
-            user_details.activity_id = activity_id;
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
 
-            return this.View(user_details);
-        }
-        public ActionResult AuthenticateUserEmail(string email)
-        {
-            Authentication authentication = new Authentication();
-
-            AuthenticationInput authInputs = new AuthenticationInput();
-            authInputs.AuthenticationType = Constants.AuthenticationType.Email;
-            authInputs.AuthenticationMode = Constants.AuthneticationMode.TokenBasedAuthention;
-            authInputs.Receiver = email;
-            authInputs.Subject = "Adventure Tour Management Token Verification";
-
-            tokenId = authentication.Authenticate(authInputs);
-
-            return this.View();
+                VMUserDetail user_details = new VMUserDetail();
+                user_details.IsToken = false;
+                return this.View(user_details);
+            }
+            else
+            {
+                return View("error");
+            }
         }
 
-        public ActionResult verifyToken(string userOTP)
+        public async Task<ActionResult> BuyNowAsync(int activityId)
         {
-            VerificationInput verifInputs = new VerificationInput();
-            verifInputs.TransactionIdentifier = tokenId;
-            verifInputs.TransactionToken = userOTP;
+            string userEmail = string.Empty;
 
-            authentication.Verify(tokenId);
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                userEmail = HttpContext.Session.GetString("CurrentUser");
+            }
 
+            var result = await _shopping.AddToCart(activityId, userEmail);
 
-            return this.View();
+            return RedirectToAction("GetUserDetails");
         }
 
-        public void ShoppingCart()
+        public async Task<ActionResult> AuthenticateUserEmail(VMUserDetail email)
         {
-            //shopping cart library
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+
+                var tokenId = await _shopping.AuthenticateUser(email.user_email);
+
+                VMUserDetail user_details = new VMUserDetail();
+                user_details.user_email = email.user_email;
+                user_details.userAuthID = tokenId;
+                user_details.IsToken = true;
+
+                return this.View("GetUserDetails", user_details);
+            }
+            else
+                return View("error");
         }
 
-        public void AddToCart()
+        public async Task<ActionResult> ResendAuthToken(VMUserDetail email)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+
+                var tokenId = await _shopping.AuthenticateUser(email.user_email);
+
+                VMUserDetail user_details = new VMUserDetail();
+                user_details.user_email = email.user_email;
+                user_details.userAuthID = tokenId;
+                user_details.IsToken = true;
+                user_details.Message = string.Empty;
+
+                return this.View("GetUserDetails", user_details);
+            }
+            else
+                return View("Error");
+        }
+
+        public async Task<ActionResult> VerifyTokenAsync(VMUserDetail email)
         {
 
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+
+                bool verificationresult = await _shopping.VerifyUserToken(email.user_email, email.userAuthID, email.Token);
+
+                if (verificationresult)
+                {
+                    await _shopping.SendBookingConfirmation(email.user_email);
+
+                    return this.View(verificationresult);
+                }
+                else
+                {
+                    var tokenId = await _shopping.AuthenticateUser(email.user_email);
+
+                    VMUserDetail user_details = new VMUserDetail();
+                    user_details.user_email = email.user_email;
+                    user_details.userAuthID = tokenId;
+                    user_details.IsToken = true;
+
+                    return this.View("GetUserDetails", user_details);
+                }
+            }
+            else
+                return View("Error");
+
+
+        }
+
+        // proceed to checkout --> place order
+        
+        public async Task<ActionResult> ViewShoppingCart()
+        {
+            string userEmail = string.Empty;
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                userEmail = HttpContext.Session.GetString("CurrentUser");
+            }
+
+            var result = await _shopping.FetchShoppingCart(userEmail);
+            VMActivityCart vmobj = new VMActivityCart()
+            {
+                CartItem = result
+            };
+
+            return View(vmobj);
+        }
+
+        //TODO : create view -> go to cart / continue shopping (home)
+        public async Task<ActionResult> AddToCart(int activityId)
+        {
+            string userEmail = string.Empty;
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                userEmail = HttpContext.Session.GetString("CurrentUser");
+            }
+
+            var result = await _shopping.AddToCart(activityId,userEmail);
+
+            var vmObj = ActivityCartDTO.TransformcartItem(result,activityId);
+            return View(vmObj);
+        }
+
+        // cart
+        public async Task<IActionResult> DeleteFromCart(int activityId)
+        {
+            string userEmail = string.Empty;
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                userEmail = HttpContext.Session.GetString("CurrentUser");
+            }
+
+            
+            await _shopping.RemoveFromCart(activityId, userEmail);
+
+           return RedirectToAction("ViewShoppingCart");
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using SecureAccess.Helper;
-using SecureAccess.Interface;
 using SecureAccess.Model;
 using System;
 using System.IO;
@@ -7,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace SecureAccess
 {
-    public class Authentication : IAuthentication
+    public class Authentication
     {
         public async Task<Guid> Authenticate(AuthenticationInput authInputs)
         {
+            
             EmailAuthenticate authenticationByEmail = new EmailAuthenticate();
        
-            var transactID =  await authenticationByEmail.SendEmailAsync(authInputs);
+            var transactID =  await authenticationByEmail.SendAuthenticationEmail(authInputs);
 
             return transactID; 
             
@@ -25,7 +25,7 @@ namespace SecureAccess
 
             string filepath = "\\TransactFiles\\" + verifInputs.TransactionIdentifier + ".txt";
 
-            verifyToken.FileDecryption(filepath);
+           // verifyToken.FileDecryption(filepath);
 
             DateTime fileCreationDate = File.GetCreationTime(filepath);
 
@@ -37,7 +37,7 @@ namespace SecureAccess
                     var fileText = await File.ReadAllTextAsync(filepath);
                     if (!string.IsNullOrEmpty(fileText))
                     {
-                        string decrypted = verifyToken.DecryptText(fileText, "encryptionkey");
+                        string decrypted = verifyToken.DecryptText(fileText.Trim(), "encryptionKey");
 
                         if (decrypted == verifInputs.TransactionToken)
                         {

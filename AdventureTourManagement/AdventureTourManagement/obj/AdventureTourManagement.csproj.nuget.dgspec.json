@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "\\\\Mac\\Home\\Documents\\ADSM1\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj": {}
+    "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj": {}
   },
   "projects": {
-    "\\\\Mac\\Home\\Documents\\ADSM1\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj": {
+    "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "\\\\Mac\\Home\\Documents\\ADSM1\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj",
         "projectName": "AdventureTourManagement",
-        "projectPath": "\\\\Mac\\Home\\Documents\\ADSM1\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj",
         "packagesPath": "C:\\Users\\anshul\\.nuget\\packages\\",
-        "outputPath": "\\\\Mac\\Home\\Documents\\ADSM1\\AdventureTourManagement\\AdventureTourManagement\\obj\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj": {
-                "projectPath": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj"
+              "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj"
               }
             }
           }
@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.1.10, )"
             }
           },
           "imports": [
@@ -77,14 +81,14 @@
         }
       }
     },
-    "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj": {
+    "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj",
         "projectName": "SecureAccess",
-        "projectPath": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\SecureAccess.csproj",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj",
         "packagesPath": "C:\\Users\\anshul\\.nuget\\packages\\",
-        "outputPath": "\\\\Mac\\Home\\Documents\\ADSM1\\SecureAccess\\obj\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

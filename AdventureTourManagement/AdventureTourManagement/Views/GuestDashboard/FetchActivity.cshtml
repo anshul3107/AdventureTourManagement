@@ -1,4 +1,4 @@
-﻿@model ADSM.ViewModels.VMListActivities
+﻿@model AdventureTourManagement.ViewModels.VMListActivities
 
 @{
     ViewBag.Title = "FetchActivity";
@@ -68,8 +68,8 @@
                         </div>
                     </div>
                     <div>
-                        @Html.ActionLink("Buy Now", "GetUserDetails", new { activity_id = item.activity_id}, new { @class = "btn btn-info btn-activity" })
-                        @Html.ActionLink("Add to Cart", "ShoppingCart", null, new { @class = "btn btn-info btn-activity" })
+                        @Html.ActionLink("Buy Now", "BuyNowAsync", "Shop", new { activityId = item.activity_id }, new { @class = "btn btn-info btn-activity" })
+                        @Html.ActionLink("Add to Cart", "AddToCart","Shop", new { activityId= item.activity_id}, new { @class = "btn btn-info btn-activity" })
                     </div>
                 </div>
                 </div>
