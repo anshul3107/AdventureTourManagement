@@ -19,7 +19,7 @@ namespace AdventureTourManagement.Controllers
         }
 
         // GET: GuestDashboard
-        public async System.Threading.Tasks.Task<ActionResult> Index(int regionId =0)
+        public async Task<ActionResult> Index(int regionId =0)
         {
             HttpContext.Session.SetString("CurrentUser", Guid.NewGuid().ToString());
             HttpContext.Session.CommitAsync().Wait();
@@ -41,20 +41,17 @@ namespace AdventureTourManagement.Controllers
                 {
                     if (activityFilter.RegionSelected == "0")
                     {
-
                         return RedirectToAction("Index", new { regionId = 0 });
                     }
                     else
                     {
                         int region_id = Convert.ToInt32(activityFilter.RegionSelected);
                         return RedirectToAction("Index", new { regionId = region_id });
-
                     }
                 }
             }
 
-            return RedirectToAction("Index", new { regionId = 0 }); ;
-
+            return RedirectToAction("Index", new { regionId = 0 });
         }
 
         public ActionResult FetchActivity(int activity_id)
@@ -71,7 +68,7 @@ namespace AdventureTourManagement.Controllers
             return this.View(fetchActivity);
         }
 
-        public async System.Threading.Tasks.Task<ActionResult> FetchAllActivity()
+        public async Task<ActionResult> FetchAllActivity()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
