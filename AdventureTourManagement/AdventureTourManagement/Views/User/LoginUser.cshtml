@@ -1,0 +1,47 @@
+﻿@model AdventureTourManagement.ViewModels.VmUser
+@{
+    ViewData["Title"] = "LoginUser";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<table>
+    <tr>
+        <td>
+            Name :
+        </td>
+        <td>
+            @Html.Label(Model.UserName)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Email :
+        </td>
+        <td>
+            <label>@Model.UserEmail</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Contact :
+        </td>
+        <td>
+            @Html.Label(Model.UserContact)
+        </td>
+    </tr>
+</table>
+<br />
+<table>
+    <tr>
+        <td>
+            @Html.ActionLink("Update Details", "UpdateUserDetailView", "User", new { userEmail = Model.UserEmail })
+        </td>
+        <td>
+    @Html.ActionLink("Change Password", "UpdateUserPasswordView", "User", new { userEmail = Model.UserEmail })
+        </td>
+        <td>
+            @Html.ActionLink("View Booking History", "GetBookingHistory","User",new { userEmail = Model.UserEmail})
+        </td>
+    </tr>
+</table>
+

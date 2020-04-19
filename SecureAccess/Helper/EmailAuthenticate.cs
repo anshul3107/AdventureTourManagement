@@ -15,6 +15,7 @@ namespace SecureAccess.Helper
 {
     public  class EmailAuthenticate
     {
+
         public async Task<Guid> SendAuthenticationEmail(AuthenticationInput input)
         {
             EmailDTO messageDTO = new EmailDTO();
@@ -59,7 +60,7 @@ namespace SecureAccess.Helper
 
         private async Task CreateEncryptedFileAsync(string token, Guid transactionId)
         {
-            EncryptionDecryption coded = new EncryptionDecryption();
+            EncryptionDecryption coded = EncryptionDecryption.CreateInstance();
 
             string eToken = coded.EncryptText(token,"encryptionKey");
 

@@ -12,9 +12,9 @@ namespace AdventureTourManagement.Interface.Shopping
     {
         Task<Guid> AuthenticateUser(string userEmail);
         Task<bool> VerifyUserToken(string userEmail, Guid transactionID, string token);
-        Task SendBookingConfirmation(string userEmail);
-        Task<List<Bookings>> FetchAllOrders(string userEmail);
-        Task<List<ActivityCartDTO>> FetchShoppingCart(string userEmail = null);
+        Task SendBookingConfirmation(string userEmail, int cartId);
+        Task<List<VmBooking>> FetchAllOrders(string userEmail);
+        Task<VMActivityCart> FetchShoppingCart(string userEmail = null);
         Task<ActivityCart> AddToCart(int activityId, string userEmail = null);
         Task<ActivityCart> RemoveFromCart(int activityId, string userEmail = null);
     }

@@ -345,6 +345,10 @@
         }
       },
       "SecureAccess/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.1"
+        },
         "runtime": {
           "SecureAccess.dll": {}
         },

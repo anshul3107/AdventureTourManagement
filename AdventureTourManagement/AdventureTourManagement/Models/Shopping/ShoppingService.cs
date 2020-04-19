@@ -15,9 +15,11 @@ namespace AdventureTourManagement.Models.Shopping
     public class ShoppingService : IShopping
     {
         private readonly ATMDbContext _dbContext;
-
-        public ShoppingService(ATMDbContext dbContext)
+        private Authentication authentication;
+        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider)
         {
+            var secureaccessFactory = new SecureAccessFactory();
+            authentication = secureaccessFactory.CreateInstance(provider).SecureAccess.GetSecureAccess;
             _dbContext = dbContext;
         }
         public async Task<ActivityCart> AddToCart(int activityId, string userEmail = null)
@@ -97,8 +99,6 @@ namespace AdventureTourManagement.Models.Shopping
 
         public Task<Guid> AuthenticateUser(string userEmail)
         {
-            Authentication authentication = new Authentication();
-
             AuthenticationInput authInputs = new AuthenticationInput();
             authInputs.AuthenticationType = Constants.AuthenticationType.Email;
             authInputs.AuthenticationMode = Constants.AuthneticationMode.TokenBasedAuthention;
@@ -107,21 +107,35 @@ namespace AdventureTourManagement.Models.Shopping
 
             var result = authentication.Authenticate(authInputs);
             return result;
+
         }
 
-        public async Task<List<Bookings>> FetchAllOrders(string userEmail)
+        public async Task<List<VmBooking>> FetchAllOrders(string userEmail)
         {
-            var userId = _dbContext.UserDetails.Where(x => x.emial == userEmail).FirstOrDefault().Reg_id;
-            var result = await _dbContext.Bookings.Where(x => x.user_id.Value == userId).ToListAsync();
+            var bookings = await _dbContext.Bookings.Where(x => x.user_name == userEmail).ToListAsync();
+            var result = _dbContext.Activities.Join(bookings, a => a.activity_id, b => b.activity_id, (a, b) => new VmBooking
+            {
+               ActivityId =  a.activity_id,
+               ActivityName =  a.activity_name,
+               ActivityFee =  a.activity_fee,
+               ActivityDesc =  a.activity_description,
+               BookingDate =  b.booking_date,
+               ActivityImage = a.activity_image_path,
+               UserEmail = b.user_name
+            }).ToList();
             return result;
         }
 
-        public async Task<List<ActivityCartDTO>> FetchShoppingCart(string userEmail = null)
+        public async Task<VMActivityCart> FetchShoppingCart(string userEmail = null)
         {
             var result = await _dbContext.ActivityCart.AsNoTracking().Where(x => x.Username == userEmail)
-                .Select(x => JsonConvert.DeserializeObject<List<ActivityCartDTO>>(x.ItemDetails)).FirstOrDefaultAsync();
-            
-            return result;
+                .Select(x => new { cartItems = JsonConvert.DeserializeObject<List<ActivityCartDTO>>(x.ItemDetails), cartId = x.Id }).FirstOrDefaultAsync();
+            VMActivityCart cart = new VMActivityCart
+            {
+                CartId = result.cartId,
+                CartItem = result.cartItems
+            };
+            return cart;
         }
 
         public async Task<ActivityCart> RemoveFromCart(int activityId, string userEmail = null)
@@ -140,8 +154,32 @@ namespace AdventureTourManagement.Models.Shopping
         }
 
         //TODO : update email text
-        public async Task SendBookingConfirmation(string userEmail)
+        public async Task SendBookingConfirmation(string userEmail, int cartId)
         {
+            var cartDetails = await _dbContext.ActivityCart.Where(x => x.Id == cartId).FirstOrDefaultAsync();
+            List<ActivityCartDTO> activities = JsonConvert.DeserializeObject<List<ActivityCartDTO>>(cartDetails.ItemDetails);
+            List<Bookings> bookings = new List<Bookings>();
+            List<Activities> activityEntites = _dbContext.Activities.AsNoTracking().Join(activities, x => x.activity_id, y => y.ActivityID, (x, y) => x).ToList();
+
+            foreach (var item in activities)
+            {
+                var tempBooking = new Bookings
+                {
+                    activity_id = item.ActivityID,
+                    booking_date = DateTime.Now,
+                    user_name = userEmail
+                };
+                bookings.Add(tempBooking);
+
+            }
+
+            activityEntites.ForEach(x => x.activity_slots = (x.activity_slots - 1));
+            _dbContext.Activities.UpdateRange(activityEntites);
+            _dbContext.ActivityCart.Remove(cartDetails);
+            await _dbContext.Bookings.AddRangeAsync(bookings);
+           await _dbContext.SaveChangesAsync();
+
+            
             SendCommunications comms = new SendCommunications();
             string mailText = "Hi, Your booking has been confirmed. If you are not a registered user, use the same email id to register.";
             EmailDTO dto = new EmailDTO()
@@ -157,7 +195,6 @@ namespace AdventureTourManagement.Models.Shopping
         public async Task<bool> VerifyUserToken(string userEmail, Guid transactionID, string token)
         {
             VerificationInput verifInputs = new VerificationInput();
-            Authentication authentication = new Authentication();
             verifInputs.TransactionIdentifier = transactionID;
             verifInputs.TransactionToken = token;
 
@@ -166,4 +203,5 @@ namespace AdventureTourManagement.Models.Shopping
             return verificationresult;
         }
     }
+
 }

@@ -18,6 +18,7 @@ namespace AdventureTourManagement.ViewModels
 
         public static ActivityCartDTO TransformcartItem(ActivityCart cartItem, int activityID)
         {
+            //cart item null check. Exception here
             var item = JsonConvert.DeserializeObject<List<ActivityCartDTO>>(cartItem.ItemDetails);
 
             ActivityCartDTO returnItem = item.Where(x => x.ActivityID == activityID).FirstOrDefault();
@@ -32,5 +33,6 @@ namespace AdventureTourManagement.ViewModels
     public class VMActivityCart
     {
         public List<ActivityCartDTO> CartItem { get; set; }
+        public int CartId { get; set; }
     }
 }

@@ -11,13 +11,12 @@ using System.Threading.Tasks;
 
 namespace SecureAccess.Service
 {
-   public class SendCommunications
+    public class SendCommunications
     {
         public async Task SendEmail(EmailDTO emailDTO)
         {
             try
             {
-
                 MailMessage message = new MailMessage();
                 message.To.Add(emailDTO.MailTo);
                 message.Subject = emailDTO.MailSubject;
@@ -29,20 +28,18 @@ namespace SecureAccess.Service
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }
 
         private async Task<SmtpClient> EmailConnection()
         {
-
             try
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                EncryptionDecryption encryption = new EncryptionDecryption();
-                string assemblyFile=( new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
-                var assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\'))+ "\\SAConnect\\"+ "SAConnect.txt";
+                EncryptionDecryption encryption = EncryptionDecryption.CreateInstance();
+                string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
+                var assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\')) + "\\SAConnect\\" + "SAConnect.txt";
                 //var credPath_1 = Path.Combine(assemblyPath, "SAConnect");
                 //var credPath = Path.Combine(credPath_1, "SAConnect.txt" );
                 if (File.Exists(assemblyPath))
@@ -50,11 +47,10 @@ namespace SecureAccess.Service
                     var credentials = (await File.ReadAllLinesAsync(assemblyPath)).ToList();
                     var temp = encryption.DecryptText(credentials[0], "encryptionkey");
                     var temp2 = encryption.DecryptText(credentials[1], "encryptionkey");
-                    client.Credentials = new NetworkCredential(encryption.DecryptText(credentials[0],"encryptionkey"),encryption.DecryptText(credentials[1], "encryptionkey"));
+                    client.Credentials = new NetworkCredential(encryption.DecryptText(credentials[0], "encryptionkey"), encryption.DecryptText(credentials[1], "encryptionkey"));
                 }
 
                 return client;
-
             }
             catch (Exception ep)
             {
@@ -62,7 +58,6 @@ namespace SecureAccess.Service
                 Console.WriteLine(ep.Message);
                 throw ep;
             }
-
         }
     }
     public class EmailDTO

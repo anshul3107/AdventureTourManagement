@@ -1,0 +1,49 @@
+﻿@model AdventureTourManagement.ViewModels.VmBookinglist
+@{
+    ViewData["Title"] = "GetBookingHistory";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>Index</h2>
+
+<table>
+    @foreach (var item in Model.Bookings)
+    {
+    <tr>
+        <td>
+            <div style="border-width:thin;border-color:black;border-style:solid;">
+                <table>
+                    <tr>
+                        <td>
+                            <img src=@item.ActivityImage alt=@item.ActivityName width="50" height="50">
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        @Html.ActionLink(item.ActivityName, "FetchActivity", "GuestDashboard", new { activity_id = item.ActivityId })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label> Qty: 1 </label>
+                                    </td>
+                                    <td>
+                                        €@item.ActivityFee
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="right">
+                                        @Html.ActionLink("Rate Activity", "ProvideFeedbackView", "User", new { activity_id = item.ActivityId, userEmail = item.UserEmail }, new { @class = "btn btn-primary" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+            </div>
+        </td>
+    </tr>
+    }
+</table>

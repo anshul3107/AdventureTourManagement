@@ -1,0 +1,32 @@
+﻿
+@model AdventureTourManagement.ViewModels.VmUser
+
+@{
+    ViewData["Title"] = "UpdateUserDetailView";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+
+@using (Html.BeginForm("UpdateUserDetail", "User", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.UserEmail)
+    <table>
+        <tr>
+            <td> Name : </td>
+            <td> @Html.TextBoxFor(x => x.UserName)</td>
+        </tr>
+        <tr>
+            <td> Contact : </td>
+            <td> @Html.TextBoxFor(x => x.UserContact)</td>
+        </tr>
+        <tr>
+            <td> Email : </td>
+            <td> <label> @Model.UserEmail</label></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+}

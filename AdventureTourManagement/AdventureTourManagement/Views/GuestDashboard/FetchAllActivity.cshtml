@@ -38,10 +38,21 @@
                                     <div class="col-md-1">
                                         @Html.Label(item.activity_slots.ToString())
                                     </div>
+                                    @{ 
+
+                                        if (item.activity_slots > 0)
+                                        {
 
                                     @Html.ActionLink("Buy Now", "BuyNowAsync", "Shop", new { activityId = item.activity_id })
-                                    
+
                                     @Html.ActionLink("Add to Cart", "AddToCart", "Shop", new { activityId = item.activity_id })
+                                        }
+                                        else
+                                        {
+                                            <label style="color:red;"> Sold Out </label>
+                                        }
+
+                                        }
 
                                 </div>
                         }

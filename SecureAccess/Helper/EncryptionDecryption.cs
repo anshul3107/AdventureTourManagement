@@ -8,32 +8,15 @@ namespace SecureAccess.Helper
 {
     public class EncryptionDecryption
     {
-        //Encrypt - Decrypt File
-        //public void EncryptDecryptFile(string filename)
-        //{
-        //    try
-        //    {
-        //        Console.WriteLine("Encrypt " + filename);
 
-        //        // File Encryption
-        //        FileEncryption(filename);
+        private static readonly EncryptionDecryption _encryption = new EncryptionDecryption();
 
-        //        Console.WriteLine("Decrypt " + filename);
+        public static EncryptionDecryption CreateInstance() => _encryption;
 
-        //        // File Decryption
-        //        FileDecryption(filename);
+        private EncryptionDecryption()
+        {
+        }
 
-        //        Console.WriteLine("Done");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-
-        //    Console.ReadLine();
-        //}
-
-        // Encrypt file.
         public void FileEncryption(string FileName)
         {
             File.Encrypt(FileName);
@@ -45,6 +28,41 @@ namespace SecureAccess.Helper
             File.Decrypt(FileName);
         }
 
+        public bool CompareStrings(string input, string sourceText, string passKey)
+        {
+            var diText = DecryptText(sourceText, passKey);
+           
+
+            if (diText.Equals(input))
+                return true;
+            else return false;
+
+            //var tmpSource1 = Encoding.UTF8.GetBytes(text1);
+
+            //byte[] tmpNewHash  = SHA256.Create().ComputeHash(tmpSource1);
+
+
+            //var tmpSource2 = Encoding.UTF8.GetBytes(text2);
+
+            //byte[] tmpNewHash2 = SHA256.Create().ComputeHash(tmpSource2);
+
+            //bool bEqual = false;
+            //if (tmpNewHash.Length == tmpNewHash2.Length)
+            //{
+            //    int i = 0;
+            //    while ((i < tmpNewHash.Length) && (tmpNewHash[i] == tmpNewHash2[i]))
+            //    {
+            //        i += 1;
+            //    }
+            //    if (i == tmpNewHash.Length)
+            //    {
+            //        bEqual = true;
+            //    }
+            //}
+
+           // return bEqual;
+
+        }
 
         //Encrypt - Decrypt Password
 

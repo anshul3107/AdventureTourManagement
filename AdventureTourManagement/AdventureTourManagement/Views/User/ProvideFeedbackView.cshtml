@@ -1,0 +1,33 @@
+﻿@model AdventureTourManagement.ViewModels.VMActivityRating
+@{
+    ViewData["Title"] = "ProvideFeedbackView";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>ProvideFeedbackView</h2>
+
+@using (Html.BeginForm("ProvideFeedback", "User", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td>
+                <label>@Model.ActivityName</label>
+
+            </td>
+            <td>
+                @Html.HiddenFor(x => x.activity_id)
+                @Html.HiddenFor(x => x.UserEmail)
+                @Html.RadioButtonFor(x => x.activity_rating, 5)
+                @Html.RadioButtonFor(x => x.activity_rating, 4)
+                @Html.RadioButtonFor(x => x.activity_rating, 3)
+                @Html.RadioButtonFor(x => x.activity_rating, 2)
+                @Html.RadioButtonFor(x => x.activity_rating, 1)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+}

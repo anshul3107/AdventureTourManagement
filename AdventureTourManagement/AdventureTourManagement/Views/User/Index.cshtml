@@ -1,0 +1,40 @@
+﻿@model AdventureTourManagement.ViewModels.VmUser
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("LoginUser", "User", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            Sign In
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Email ID</label> &nbsp; @Html.TextBoxFor(x=>x.UserEmail)
+        </div>
+
+        <div class="col-md-6">
+            <label>Password</label> &nbsp; @Html.PasswordFor(x => x.UserEncyryptedKey)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit">Login</button>
+            &nbsp;
+            @Html.ActionLink("Forgot Password","ForgotPassword","User",null, new { @class = "btn btn-primary btn-xs" })
+        </div>
+        <div class="col-md-6">
+           @Html.ActionLink("New User", "RegisterNewUserView","User",null,new { @class="btn btn-primary btn-xs"})
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Continue as guest", "Index", "GuestDashboard", null, new { @class = "btn btn-primary btn-xs" })
+        </div>
+    </div>
+}

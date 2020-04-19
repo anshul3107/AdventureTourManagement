@@ -1,5 +1,7 @@
 ﻿using AdventureTourManagement.Models;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AdventureTourManagement
 {
@@ -22,7 +24,7 @@ namespace AdventureTourManagement
             modelBuilder.Entity<Models.Bookings>().ToTable("Booking");
             modelBuilder.Entity<Models.Packages>().ToTable("Package");
             modelBuilder.Entity<Models.Regions>().ToTable("Region");
-            modelBuilder.Entity<Models.UserDetails>().ToTable("UserDetail");
+            modelBuilder.Entity<Models.User>().ToTable("User");
             modelBuilder.Entity<Models.ActivityCart>().ToTable("ActivityCart");
 
         }
@@ -32,8 +34,9 @@ namespace AdventureTourManagement
         public DbSet<Bookings> Bookings { get; set; }
         public DbSet<Packages> Packages { get; set; }
         public DbSet<Regions> Regions { get; set; }
-        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<ActivityCart> ActivityCart { get; set; }
 
     }
+
 }

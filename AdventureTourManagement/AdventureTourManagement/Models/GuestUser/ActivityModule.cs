@@ -1,5 +1,4 @@
-﻿
-using AdventureTourManagement.Interface;
+﻿using AdventureTourManagement.Interface;
 using AdventureTourManagement.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,6 @@ namespace AdventureTourManagement.Models.GuestUser
 
         public IDictionary<string, List<VMActivityDetails>> GetActivities(int region_id = 0)
         {
-
             IDictionary<string, List<VMActivityDetails>> data = new Dictionary<string, List<VMActivityDetails>>();
 
             try
@@ -79,5 +77,5 @@ namespace AdventureTourManagement.Models.GuestUser
             throw new NotImplementedException();
         }
     }
-    
+
 }

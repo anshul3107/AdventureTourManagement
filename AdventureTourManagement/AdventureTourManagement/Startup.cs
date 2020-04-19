@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using AdventureTourManagement.Interface;
 using AdventureTourManagement.Interface.Shopping;
+using AdventureTourManagement.Interface.User;
+using AdventureTourManagement.Models;
 using AdventureTourManagement.Models.GuestUser;
 using AdventureTourManagement.Models.Shopping;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SecureAccess.Helper;
 
 namespace AdventureTourManagement
 {
@@ -58,6 +61,8 @@ namespace AdventureTourManagement
             });
 
             services.AddScoped<IActivityAction, ActivityModule>();
+            services.AddScoped<IUser, UserService>();
+            services.AddSecureAccessService();
 
             services.AddDistributedMemoryCache();
 

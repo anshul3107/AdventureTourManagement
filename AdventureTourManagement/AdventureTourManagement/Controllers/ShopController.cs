@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SecureAccess;
 using SecureAccess.Model;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Controllers
@@ -21,13 +22,14 @@ namespace AdventureTourManagement.Controllers
 
         // buy Now
         // Place order
-        public ActionResult GetUserDetails()
+        public ActionResult GetUserDetails(int isForgetPassword, int cartId = 0)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
-
                 VMUserDetail user_details = new VMUserDetail();
                 user_details.IsToken = false;
+                user_details.IsForgetPassword = isForgetPassword;
+                user_details.cartId = cartId;
                 return this.View(user_details);
             }
             else
@@ -47,21 +49,22 @@ namespace AdventureTourManagement.Controllers
 
             var result = await _shopping.AddToCart(activityId, userEmail);
 
-            return RedirectToAction("GetUserDetails");
+            return RedirectToAction("GetUserDetails", new { isForgetPassword = 0 , cartId = result.Id });
         }
 
         public async Task<ActionResult> AuthenticateUserEmail(VMUserDetail email)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
-
                 var tokenId = await _shopping.AuthenticateUser(email.user_email);
 
                 VMUserDetail user_details = new VMUserDetail();
                 user_details.user_email = email.user_email;
                 user_details.userAuthID = tokenId;
                 user_details.IsToken = true;
-
+                user_details.IsForgetPassword = email.IsForgetPassword;
+                user_details.cartId = email.cartId;
+                ModelState.Clear();
                 return this.View("GetUserDetails", user_details);
             }
             else
@@ -72,7 +75,6 @@ namespace AdventureTourManagement.Controllers
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
-
                 var tokenId = await _shopping.AuthenticateUser(email.user_email);
 
                 VMUserDetail user_details = new VMUserDetail();
@@ -80,7 +82,9 @@ namespace AdventureTourManagement.Controllers
                 user_details.userAuthID = tokenId;
                 user_details.IsToken = true;
                 user_details.Message = string.Empty;
-
+                user_details.IsForgetPassword = email.IsForgetPassword;
+                user_details.cartId = email.cartId;
+                ModelState.Clear();
                 return this.View("GetUserDetails", user_details);
             }
             else
@@ -97,26 +101,30 @@ namespace AdventureTourManagement.Controllers
 
                 if (verificationresult)
                 {
-                    await _shopping.SendBookingConfirmation(email.user_email);
+                    if (email.IsForgetPassword > 0)
+                    {
+                        return RedirectToAction("UpdateUserPasswordView", "User", new { userEmail  = email.user_email});
+                    }
+                    else
+                    {
+                        await _shopping.SendBookingConfirmation(email.user_email,email.cartId);
 
-                    return this.View(verificationresult);
+                        return this.View(verificationresult);
+                    }
                 }
                 else
                 {
-                    var tokenId = await _shopping.AuthenticateUser(email.user_email);
-
+                   
                     VMUserDetail user_details = new VMUserDetail();
                     user_details.user_email = email.user_email;
-                    user_details.userAuthID = tokenId;
                     user_details.IsToken = true;
+                    user_details.Message = "Invalid token";
 
                     return this.View("GetUserDetails", user_details);
                 }
             }
             else
                 return View("Error");
-
-
         }
 
         // proceed to checkout --> place order
@@ -131,12 +139,8 @@ namespace AdventureTourManagement.Controllers
             }
 
             var result = await _shopping.FetchShoppingCart(userEmail);
-            VMActivityCart vmobj = new VMActivityCart()
-            {
-                CartItem = result
-            };
-
-            return View(vmobj);
+            
+            return View(result);
         }
 
         //TODO : create view -> go to cart / continue shopping (home)

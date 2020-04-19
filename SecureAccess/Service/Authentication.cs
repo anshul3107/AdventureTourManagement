@@ -1,4 +1,6 @@
-﻿using SecureAccess.Helper;
+﻿
+using Microsoft.AspNetCore.Mvc.Filters;
+using SecureAccess.Helper;
 using SecureAccess.Model;
 using System;
 using System.IO;
@@ -8,6 +10,14 @@ namespace SecureAccess
 {
     public class Authentication
     {
+        private static readonly Authentication _Authentication = new Authentication();
+
+        public static Authentication CreateInstance() => _Authentication;
+
+        private Authentication()
+        {
+
+        }
         public async Task<Guid> Authenticate(AuthenticationInput authInputs)
         {
             
@@ -21,7 +31,8 @@ namespace SecureAccess
 
         public async Task<bool> Verify(VerificationInput verifInputs)
         {
-            EncryptionDecryption verifyToken = new EncryptionDecryption();
+            TwoStepAuth auth = new TwoStepAuth();
+            EncryptionDecryption verifyToken = auth.GetEncryptionDecryption;
 
             string filepath = "\\TransactFiles\\" + verifInputs.TransactionIdentifier + ".txt";
 
@@ -58,5 +69,50 @@ namespace SecureAccess
                 return false;
             }
         }
+    }
+
+    public class TwoStepAuth : IDisposable
+    {
+        public bool IsReusable => throw new NotImplementedException();
+
+        public Authentication GetSecureAccess
+        {
+            get; set;
+        }
+
+        public EncryptionDecryption GetEncryptionDecryption
+        {
+            get; set;
+        }
+
+        public TwoStepAuth()
+        {
+            GetEncryptionDecryption = EncryptionDecryption.CreateInstance();
+            GetSecureAccess = Authentication.CreateInstance();
+
+        }
+      
+        public void Dispose()
+        {
+            GetSecureAccess = null;
+        }
+    }
+
+    public class SecureAccessFactory
+    {
+        private TwoStepAuth _twoStepAuth;
+        public TwoStepAuth SecureAccess { get { return _twoStepAuth; } set
+            {
+                _twoStepAuth = value;
+            }
+        }
+
+        public SecureAccessFactory CreateInstance(IServiceProvider serviceProvider)
+        {
+            var instance = serviceProvider.GetService(typeof(TwoStepAuth));
+            return new SecureAccessFactory { SecureAccess =(TwoStepAuth) instance };
+        }
+
+
     }
 }
