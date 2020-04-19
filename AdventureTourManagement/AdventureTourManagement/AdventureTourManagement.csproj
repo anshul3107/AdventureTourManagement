@@ -25,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SecureAccess\SecureAccess.csproj" />
+    <Reference Include="SecureAccess">
+      <HintPath>..\Dependency\SecureAccess.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

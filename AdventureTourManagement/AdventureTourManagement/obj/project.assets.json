@@ -2751,7 +2751,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Newtonsoft.Json/12.0.3": {
+      "Newtonsoft.Json/11.0.2": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -4614,21 +4614,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
-        }
-      },
-      "SecureAccess/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.1",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.1",
-          "Newtonsoft.Json": "12.0.3"
-        },
-        "compile": {
-          "bin/placeholder/SecureAccess.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SecureAccess.dll": {}
         }
       }
     }
@@ -7666,10 +7651,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/12.0.3": {
-      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+    "Newtonsoft.Json/11.0.2": {
+      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
       "type": "package",
-      "path": "newtonsoft.json/12.0.3",
+      "path": "newtonsoft.json/11.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7692,9 +7677,8 @@
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.12.0.3.nupkg.sha512",
-        "newtonsoft.json.nuspec",
-        "packageIcon.png"
+        "newtonsoft.json.11.0.2.nupkg.sha512",
+        "newtonsoft.json.nuspec"
       ]
     },
     "Newtonsoft.Json.Bson/1.0.1": {
@@ -12549,11 +12533,6 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
-    },
-    "SecureAccess/1.0.0": {
-      "type": "project",
-      "path": "../../SecureAccess/SecureAccess.csproj",
-      "msbuildProject": "../../SecureAccess/SecureAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -12561,8 +12540,7 @@
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.10",
-      "SecureAccess >= 1.0.0"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.10"
     ]
   },
   "packageFolders": {
@@ -12594,11 +12572,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj": {
-              "projectPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

@@ -89,4 +89,3 @@
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\obj\Debug\netcoreapp2.1\AdventureTourManagement.pdb
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\obj\Debug\netcoreapp2.1\AdventureTourManagement.genruntimeconfig.cache
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\Utility\ATMConnect.txt
-\\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\SecureAccess.pdb

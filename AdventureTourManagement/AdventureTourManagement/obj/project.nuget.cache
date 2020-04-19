@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LGbIRrRQFIbeA9Q/UpxiFD0+lJgUc++viVFAlb8Vm5gTnq5oIFy/fbZEDKWwxpR66CHwmuMpyMYZFaIeCtdbwA==",
+  "dgSpecHash": "h4CsSujE7gLjM/7Dj5nxsQlxiJCvqj7Kdkkh+ZaylC/3AFuer3NY8VjwKHlPTCRffbhJb4rSVhA27HWgd35tGQ==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.csproj",
   "expectedPackageFiles": [
@@ -180,7 +180,7 @@
     "C:\\Users\\anshul\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\2.1.10\\microsoft.visualstudio.web.codegenerators.mvc.2.1.10.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\anshul\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\anshul\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\remotion.linq\\2.2.0\\remotion.linq.2.2.0.nupkg.sha512",
