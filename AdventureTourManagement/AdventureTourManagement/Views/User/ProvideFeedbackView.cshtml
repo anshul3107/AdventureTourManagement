@@ -4,30 +4,23 @@
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
-<h2>ProvideFeedbackView</h2>
+<h2>Feedback</h2>
 
 @using (Html.BeginForm("ProvideFeedback", "User", FormMethod.Post))
 {
-    <table>
-        <tr>
-            <td>
-                <label>@Model.ActivityName</label>
-
-            </td>
-            <td>
-                @Html.HiddenFor(x => x.activity_id)
-                @Html.HiddenFor(x => x.UserEmail)
-                @Html.RadioButtonFor(x => x.activity_rating, 5)
-                @Html.RadioButtonFor(x => x.activity_rating, 4)
-                @Html.RadioButtonFor(x => x.activity_rating, 3)
-                @Html.RadioButtonFor(x => x.activity_rating, 2)
-                @Html.RadioButtonFor(x => x.activity_rating, 1)
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button type="submit">Submit</button>
-            </td>
-        </tr>
-    </table>
+    <form>
+        <div class="form-group">
+            <label for="ratiactivity_ratingng">
+                @Model.ActivityName
+            </label>
+            <input type="range" name="activity_rating" class="form-control-range" id="activity_rating" min="1" max="5" step=".5" value="1">
+            <label style="width: 100%;">
+                <span class="float-left">1</span>
+                <span class="float-right">5</span>
+            </label>
+        </div>
+        @Html.HiddenFor(x => x.activity_id)
+        @Html.HiddenFor(x => x.UserEmail)
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 }

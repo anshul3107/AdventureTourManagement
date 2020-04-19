@@ -4,21 +4,21 @@
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Booking History</h2>
 
-<table>
+<table class="table" style="width: 40%;">
     @foreach (var item in Model.Bookings)
     {
     <tr>
         <td>
             <div style="border-width:thin;border-color:black;border-style:solid;">
-                <table>
+                <table class="table mb-0">
                     <tr>
                         <td>
-                            <img src=@item.ActivityImage alt=@item.ActivityName width="50" height="50">
+                            <img src=@item.ActivityImage alt=@item.ActivityName class="img-fluid" style="width: 250px;">
                         </td>
                         <td>
-                            <table>
+                            <table class="table">
                                 <tr>
                                     <td colspan="2" align="center">
                                         @Html.ActionLink(item.ActivityName, "FetchActivity", "GuestDashboard", new { activity_id = item.ActivityId })
