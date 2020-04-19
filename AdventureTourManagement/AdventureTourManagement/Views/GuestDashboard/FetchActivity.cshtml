@@ -35,14 +35,14 @@
 <div class="row">
     <h2 class="col-md-10">Activity Details based on Selection from Trend</h2>
     <span class="col-md-2">
-    @Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-info btn-back" })</span>
+    @Html.ActionLink("Go Back", "Index", null, null, new { @class = "btn btn-info btn-back" })</span>
 </div>
 @{
     var data = Model.showActivities;
 
     foreach (var item in data)
     {
-        <div class="row">
+        <div class="row mb-5">
             <div>
                 @*<h3> Recommended Activities </h3>*@
                 <div class="content-block">
@@ -75,10 +75,6 @@
                 </div>
         </div>
     }
-    @*<div>
-        @Html.ActionLink("Buy Now", "Checkout", null, new { @class = "btn btn-info btn-activity" })
-        @Html.ActionLink("Add to Cart", "ShoppingCart", null, new { @class = "btn btn-info btn-activity" })
-    </div>*@
 
 
 }

@@ -5,13 +5,23 @@
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
-<h2>ViewShoppingCart</h2>
+<h2 class="border-bottom pb-3">
+    Shopping Cart
+    <div class="float-right">
+    @{
+        if (Model.CartItem != null && Model.CartItem.Count > 0)
+        {
+            @Html.ActionLink("Place Order", "GetUserDetails", "Shop", null, new { @class = "btn btn-primary" })
+        }
+    }
+</div>
+</h2>
 
-<table width="100%">
+<table width="40%">
     <tr>
-        <td width="70%">
+        <td>
 
-            <table>
+            <table class="table">
                 @{
                     if (Model.CartItem != null && Model.CartItem.Count > 0)
                     {
@@ -20,10 +30,10 @@
                         <tr>
                             <td>
                                 <div style="border-width:thin;border-color:black;border-style:solid;">
-                                    <table>
+                                    <table class="table" style="margin-bottom: 0;">
                                         <tr>
                                             <td>
-                                                <img src=@item.ActivityImage alt=@item.ActivityName width="50" height="50">
+                                                <img src=@item.ActivityImage alt=@item.ActivityName class="img-fluid rounded float-left" style="width: 150px;">
                                             </td>
                                             <td>
                                                 <table>
@@ -49,7 +59,6 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <br />
                                 </div>
                             </td>
                         </tr>
@@ -66,19 +75,7 @@
                         </tr>
                     }
                     }
-
             </table>
-        </td>
-        <td width="30%">
-            <div style="vertical-align:top;">
-                @{
-                    if (Model.CartItem != null && Model.CartItem.Count > 0)
-                    {
-
-                        @Html.ActionLink("Place Order", "GetUserDetails", "Shop", null, new { @class = "btn btn-primary" })
-                    }
-                }
-            </div>
         </td>
     </tr>
 </table>

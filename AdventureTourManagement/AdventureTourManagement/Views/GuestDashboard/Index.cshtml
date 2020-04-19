@@ -16,7 +16,7 @@
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
-<div class="panel panel-success">
+<div class="panel" style="background-color: aliceblue;">
     <div class="panel-heading">
         <h3 style="text-align:center"><b>Activity Trends</b></h3>
     </div>
@@ -24,11 +24,12 @@
 @using (Html.BeginForm("FilterActivities", "GuestDashboard", FormMethod.Post))
 {
     <div class="row">
+        <label class="col-md-12">Choose Region</label>
         <div class="col-md-8">
-            @Html.DropDownListFor(x => x.RegionSelected, new SelectList(Model.Regions,"Value","Text"))
+            @Html.DropDownListFor(x => x.RegionSelected, new SelectList(Model.Regions,"Value","Text"), new {@class="custom-select custom-select-lg mb-3"})
         </div>
         <div class="col-md-4">
-            <button type="submit">Filter</button>
+            <button type="submit" class="btn btn-primary">Filter</button>
         </div>
     </div>
     <div class="row">
