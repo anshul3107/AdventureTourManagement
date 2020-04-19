@@ -31,12 +31,19 @@ namespace AdventureTourManagement.Utility
         {
             NetworkKeyDTO result = new NetworkKeyDTO();
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
-            var assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\')) + "\\Utility\\" + "ATMConnect.txt";
-            
+            var assemblyPath = string.Empty;
+            if (assemblyFile.Contains("\\"))
+            {
+                assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\')) + "\\Utility\\" + "ATMConnect.txt";
+            }
+            else
+            {
+                assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('/')) + "/Utility/" + "ATMConnect.txt";
+            }
             if (File.Exists(assemblyPath))
             {
                 var credentials = (await File.ReadAllLinesAsync(assemblyPath)).ToList();
-                
+
                 result.EncryptedUserName = credentials[0];
                 result.EncryptedUserMessage = "encryptionkey";
                 result.EncryptedKey = credentials[1];

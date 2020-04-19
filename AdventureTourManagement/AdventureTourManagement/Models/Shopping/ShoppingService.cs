@@ -18,7 +18,7 @@ namespace AdventureTourManagement.Models.Shopping
         private readonly ATMDbContext _dbContext;
         private Authentication authentication;
         private IConnect _connectService;
-        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider,IConnect connectService)
+        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider, IConnect connectService)
         {
             var secureaccessFactory = new SecureAccessFactory();
             authentication = secureaccessFactory.CreateInstance(provider).SecureAccess.GetSecureAccess;
@@ -27,7 +27,7 @@ namespace AdventureTourManagement.Models.Shopping
         }
         public async Task<ActivityCart> AddToCart(int activityId, string userEmail = null)
         {
-            var cartItem = _dbContext.ActivityCart.Any(x => x.Username == userEmail) ? 
+            var cartItem = _dbContext.ActivityCart.Any(x => x.Username == userEmail) ?
                 _dbContext.ActivityCart.AsNoTracking().Where(x => x.Username == userEmail).FirstOrDefault() : null;
             List<ActivityCartDTO> dtoLst = new List<ActivityCartDTO>();
 
@@ -38,7 +38,7 @@ namespace AdventureTourManagement.Models.Shopping
                     dtoLst = JsonConvert.DeserializeObject<List<ActivityCartDTO>>(cartItem.ItemDetails);
                 }
             }
-            
+
             var activityDetails = _dbContext.Activities.Where(x => x.activity_id == activityId).FirstOrDefault();
             ActivityCartDTO dto = new ActivityCartDTO
             {
@@ -51,15 +51,15 @@ namespace AdventureTourManagement.Models.Shopping
             };
 
             dtoLst.Add(dto);
-           
+
 
             string itemJson = JsonConvert.SerializeObject(dtoLst);
             if (string.IsNullOrEmpty(userEmail))
             {
                 return null;
-               
+
             }
-            
+
             ActivityCart entity = new ActivityCart
             {
                 ItemDetails = itemJson,
@@ -68,21 +68,21 @@ namespace AdventureTourManagement.Models.Shopping
 
             ActivityCart result = new ActivityCart();
 
-            if(cartItem != null)
+            if (cartItem != null)
             {
-                 entity.Id = cartItem.Id;
-                 var exeResult = _dbContext.ActivityCart.Update(entity);
-                 result = exeResult.Entity;
+                entity.Id = cartItem.Id;
+                var exeResult = _dbContext.ActivityCart.Update(entity);
+                result = exeResult.Entity;
             }
             else
             {
                 var exeResult = await _dbContext.ActivityCart.AddAsync(entity);
                 result = exeResult.Entity;
             }
-         
+
             await _dbContext.SaveChangesAsync();
             return result;
-          
+
         }
 
         private ActivityCartDTO FetchCartDTO(int activityID)
@@ -118,13 +118,13 @@ namespace AdventureTourManagement.Models.Shopping
             var bookings = await _dbContext.Bookings.Where(x => x.user_name == userEmail).ToListAsync();
             var result = _dbContext.Activities.Join(bookings, a => a.activity_id, b => b.activity_id, (a, b) => new VmBooking
             {
-               ActivityId =  a.activity_id,
-               ActivityName =  a.activity_name,
-               ActivityFee =  a.activity_fee,
-               ActivityDesc =  a.activity_description,
-               BookingDate =  b.booking_date,
-               ActivityImage = a.activity_image_path,
-               UserEmail = b.user_name
+                ActivityId = a.activity_id,
+                ActivityName = a.activity_name,
+                ActivityFee = a.activity_fee,
+                ActivityDesc = a.activity_description,
+                BookingDate = b.booking_date,
+                ActivityImage = a.activity_image_path,
+                UserEmail = b.user_name
             }).ToList();
             return result;
         }
@@ -145,7 +145,7 @@ namespace AdventureTourManagement.Models.Shopping
         {
             var entity = await _dbContext.ActivityCart.AsNoTracking().Where(x => x.Username == userEmail).FirstOrDefaultAsync();
             var cartItems = JsonConvert.DeserializeObject<List<ActivityCartDTO>>(entity.ItemDetails);
-            
+
             var actDTO = FetchCartDTO(activityId);
             cartItems.RemoveAll(x => x.ActivityID == actDTO.ActivityID);
             var itemJson = JsonConvert.SerializeObject(cartItems);
@@ -159,7 +159,7 @@ namespace AdventureTourManagement.Models.Shopping
         //TODO : update email text
         public async Task SendBookingConfirmation(string userEmail, int cartId)
         {
-            var cartDetails = await _dbContext.ActivityCart.Where(x => x.Id == cartId).FirstOrDefaultAsync();
+            var cartDetails = await _dbContext.ActivityCart.AsNoTracking().Where(x => x.Id == cartId).FirstOrDefaultAsync();
             List<ActivityCartDTO> activities = JsonConvert.DeserializeObject<List<ActivityCartDTO>>(cartDetails.ItemDetails);
             List<Bookings> bookings = new List<Bookings>();
             List<Activities> activityEntites = _dbContext.Activities.AsNoTracking().Join(activities, x => x.activity_id, y => y.ActivityID, (x, y) => x).ToList();
@@ -180,9 +180,9 @@ namespace AdventureTourManagement.Models.Shopping
             _dbContext.Activities.UpdateRange(activityEntites);
             _dbContext.ActivityCart.Remove(cartDetails);
             await _dbContext.Bookings.AddRangeAsync(bookings);
-           await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-            
+
             SendCommunications comms = new SendCommunications();
             string mailText = "Hi, Your booking has been confirmed. If you are not a registered user, use the same email id to register.";
             EmailDTO dto = new EmailDTO()
