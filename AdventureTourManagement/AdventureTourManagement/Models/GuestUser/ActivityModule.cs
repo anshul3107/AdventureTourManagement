@@ -1,8 +1,11 @@
 ﻿using AdventureTourManagement.Interface;
 using AdventureTourManagement.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Models.GuestUser
 {
@@ -18,26 +21,28 @@ namespace AdventureTourManagement.Models.GuestUser
             this.dbContext = dbContext;
         }
 
-        public IDictionary<string, List<VMActivityDetails>> GetActivities(int region_id = 0)
+        public async Task<IDictionary<string, List<VMActivityDetails>>> GetActivities(int region_id = 0)
         {
             IDictionary<string, List<VMActivityDetails>> data = new Dictionary<string, List<VMActivityDetails>>();
 
             try
             {
                 var _serviceSeasonal = _serviceProvider("SA");
-                var saActivity = _serviceSeasonal.GetActivity();
+                var saActivity =await _serviceSeasonal.GetActivity(region_id);
                 if (saActivity != null)
                     data.Add("SA", saActivity);
 
                 var _serviceRecommended = _serviceProvider("RA");
-                var raActivity = _serviceRecommended.GetActivity();
+                var raActivity = await _serviceRecommended.GetActivity(region_id);
                 if (raActivity != null)
                     data.Add("RA", raActivity);
 
                 var _serviceRecentlyBought = _serviceProvider("RB");
-                var rbActivity = _serviceRecentlyBought.GetActivity();
+                var rbActivity = await _serviceRecentlyBought.GetActivity(region_id);
                 if (rbActivity != null)
                     data.Add("RB", rbActivity);
+
+
 
             }
             catch (Exception ex)
@@ -48,33 +53,40 @@ namespace AdventureTourManagement.Models.GuestUser
             return data;
         }
 
-        public List<Activities> BuyActivity(int activity_id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ConfirmOrder(int activity_id, string username)
-        {
-            throw new NotImplementedException();
-        }
 
         public Activities GetActivityDetailByID(int activity_id)
         {
-            var activity_details_result = dbContext.Activities.Select(x => x).Where(x => x.activity_id == activity_id).FirstOrDefault();
-
-            return activity_details_result;
+                var activity_details_result = dbContext.Activities.Select(x => x).Where(x => x.activity_id == activity_id).FirstOrDefault();
+                
+                return activity_details_result;
+         
         }
 
-        public List<Activities> GetAllActivities()
+        public async Task<List<Activities>> GetAllActivities(int regionId = 0)
         {
-            var all_activities_result = dbContext.Activities.Select(x => x).ToList();
+            if (regionId > 0)
+            {
+                var activityRegionMap = await dbContext.ActivityRegionMapping.Where(x => x.region_id == regionId).ToListAsync();
+                var all_activities_result = dbContext.Activities.Join(activityRegionMap,x=>x.activity_id,y=>y.activity_id,(x,y)=>x).ToList();
 
-            return all_activities_result;
+                return all_activities_result;
+            }
+            else
+            {
+                var all_activities_result = dbContext.Activities.Select(x => x).ToList();
+
+                return all_activities_result;
+            }
         }
 
-        public ActivityRatings RateActivity(int activity_id, string username, int activity_rating)
+       public async Task<List<SelectListItem>> GetRegions()
         {
-            throw new NotImplementedException();
+            var regions = await dbContext.Regions.Select(x => new SelectListItem
+            {
+                Text = x.region_name,
+                Value = x.region_id.ToString()
+            }).ToListAsync();
+            return regions;
         }
     }
 

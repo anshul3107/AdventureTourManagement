@@ -2,7 +2,10 @@
 using AdventureTourManagement.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Controllers
 {
@@ -16,15 +19,42 @@ namespace AdventureTourManagement.Controllers
         }
 
         // GET: GuestDashboard
-        public ActionResult Index()
+        public async System.Threading.Tasks.Task<ActionResult> Index(int regionId =0)
         {
             HttpContext.Session.SetString("CurrentUser", Guid.NewGuid().ToString());
             HttpContext.Session.CommitAsync().Wait();
-
-            var listofActivities = _service.GetActivities(); //send region id
+            var lstRegions =await _service.GetRegions();
+            lstRegions.Add(new SelectListItem() { Text = "All", Value = "0" });
+            var listofActivities = await _service.GetActivities(regionId); //send region id
             VMActivity vmactivity = new VMActivity();
             vmactivity.Activities = listofActivities;
+            vmactivity.Regions = lstRegions.OrderBy(x=>x.Value).ToList();
+            vmactivity.RegionSelected = regionId.ToString();
             return this.View(vmactivity);
+        }
+
+        public async Task<IActionResult> FilterActivities(VMActivity activityFilter)
+        {
+            if(activityFilter != null)
+            {
+                if (!string.IsNullOrEmpty(activityFilter.RegionSelected))
+                {
+                    if (activityFilter.RegionSelected == "0")
+                    {
+
+                        return RedirectToAction("Index", new { regionId = 0 });
+                    }
+                    else
+                    {
+                        int region_id = Convert.ToInt32(activityFilter.RegionSelected);
+                        return RedirectToAction("Index", new { regionId = region_id });
+
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", new { regionId = 0 }); ;
+
         }
 
         public ActionResult FetchActivity(int activity_id)
@@ -41,14 +71,14 @@ namespace AdventureTourManagement.Controllers
             return this.View(fetchActivity);
         }
 
-        public ActionResult FetchAllActivity()
+        public async System.Threading.Tasks.Task<ActionResult> FetchAllActivity()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
                 HttpContext.Session.SetString("CurrentUser", Guid.NewGuid().ToString());
             }
 
-            var allActivities = _service.GetAllActivities();
+            var allActivities =await _service.GetAllActivities();
 
             VMListActivities fetchAllActivities = new VMListActivities();
             fetchAllActivities.ShowAllActivityList(allActivities);

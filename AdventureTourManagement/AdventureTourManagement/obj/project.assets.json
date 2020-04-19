@@ -4615,20 +4615,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
-      },
-      "SecureAccess/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.1",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.1"
-        },
-        "compile": {
-          "bin/placeholder/SecureAccess.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SecureAccess.dll": {}
-        }
       }
     }
   },
@@ -12547,11 +12533,6 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
-    },
-    "SecureAccess/1.0.0": {
-      "type": "project",
-      "path": "../../SecureAccess/SecureAccess.csproj",
-      "msbuildProject": "../../SecureAccess/SecureAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -12559,8 +12540,7 @@
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.10",
-      "SecureAccess >= 1.0.0"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.10"
     ]
   },
   "packageFolders": {
@@ -12592,11 +12572,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj": {
-              "projectPath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\SecureAccess\\SecureAccess.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

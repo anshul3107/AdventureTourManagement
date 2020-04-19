@@ -1,8 +1,10 @@
 ﻿using AdventureTourManagement.Interface;
 using AdventureTourManagement.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Models.GuestUser
 {
@@ -14,15 +16,24 @@ namespace AdventureTourManagement.Models.GuestUser
             this.dbContext = dbContext;
         }
 
-        public List<VMActivityDetails> GetActivity(string region)
+        public async Task<List<VMActivityDetails>> GetActivity(int region_id = 0)
         {
             var response = new List<VMActivityDetails>();
             try
             {
-                var bookings_result = dbContext.Bookings.Select(x => x).ToList();
-                var activities_result = dbContext.Activities.Select(x => x).ToList();
+                List<Activities> activities_result = new List<Activities>();
+                if (region_id > 0)
+                {
+                    var activityRegionMap = await dbContext.ActivityRegionMapping.Where(x => x.region_id == region_id).ToListAsync();
 
-                //    list of all purchased activities order by purchase date
+                     activities_result = dbContext.Activities.Join(activityRegionMap,x=>x.activity_id,y=>y.activity_id,(x,y) => x).ToList();
+                }
+                else
+                {
+
+                     activities_result = dbContext.Activities.Select(x => x).ToList();
+                }
+                var bookings_result = dbContext.Bookings.Select(x => x).ToList();
 
                 var result = bookings_result.Select(x => new { x.booking_date, x.activity_id });
                 var recent_activities = result.OrderByDescending(x => x.booking_date).Select(x => new { x.booking_date, x.activity_id }).Take(3);

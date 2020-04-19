@@ -76,7 +76,6 @@
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\appsettings.Development.json
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\appsettings.json
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
-\\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\SAConnect\SAConnect.txt
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\AdventureTourManagement.deps.json
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\AdventureTourManagement.runtimeconfig.json
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\AdventureTourManagement.runtimeconfig.dev.json
@@ -85,7 +84,6 @@
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\AdventureTourManagement.Views.dll
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\AdventureTourManagement.Views.pdb
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\SecureAccess.dll
-\\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\bin\Debug\netcoreapp2.1\SecureAccess.pdb
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\obj\Debug\netcoreapp2.1\AdventureTourManagement.Views.pdb
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\obj\Debug\netcoreapp2.1\AdventureTourManagement.csproj.CopyComplete
 \\Mac\Home\Documents\Project_final\AdventureTourManagement\AdventureTourManagement\AdventureTourManagement\obj\Debug\netcoreapp2.1\AdventureTourManagement.genruntimeconfig.cache

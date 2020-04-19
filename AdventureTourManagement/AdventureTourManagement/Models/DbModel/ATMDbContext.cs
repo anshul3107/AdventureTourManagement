@@ -1,4 +1,5 @@
 ﻿using AdventureTourManagement.Models;
+using AdventureTourManagement.Models.DbModel;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,6 +37,7 @@ namespace AdventureTourManagement
         public DbSet<Regions> Regions { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<ActivityCart> ActivityCart { get; set; }
+        public DbSet<ActivityRegionMapping> ActivityRegionMapping { get; set; }
 
     }
 

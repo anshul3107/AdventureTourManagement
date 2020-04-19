@@ -21,11 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SecureAccess\SecureAccess.csproj" />
+    <Folder Include="Scripts\css\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Scripts\css\" />
+    <Reference Include="SecureAccess">
+      <HintPath>..\Dependency\SecureAccess.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

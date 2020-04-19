@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using AdventureTourManagement.Interface;
-using AdventureTourManagement.Interface.Shopping;
-using AdventureTourManagement.Interface.User;
-using AdventureTourManagement.Models;
-using AdventureTourManagement.Models.GuestUser;
-using AdventureTourManagement.Models.Shopping;
+using AdventureTourManagement.Models.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,37 +25,17 @@ namespace AdventureTourManagement
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddDbContext<ATMDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ATMContext")));
+            
+            // Configures services for Adventure Tour Management
+            services.AddServiceConfiguration();
 
-            services.AddScoped<RecentlyBoughtActivities>();
-            services.AddScoped<SeasonalActivities>();
-            services.AddScoped<RecommendedActivities>();
-
-            services.AddScoped<IShopping, ShoppingService>();
-
-            services.AddScoped<Func<string,IActivityService>>(serviceProvider => key =>
-            {
-                switch (key)
-                {
-                    case "RA":
-                        return serviceProvider.GetService<RecommendedActivities>();
-                    case "RB":
-                        return serviceProvider.GetService<RecentlyBoughtActivities>();
-                    case "SA":
-                        return serviceProvider.GetService<SeasonalActivities>();
-                    default:
-                        throw new KeyNotFoundException(); // or maybe return null, up to you
-                }
-            });
-
-            services.AddScoped<IActivityAction, ActivityModule>();
-            services.AddScoped<IUser, UserService>();
+            // Configure services for SecureAccess (dll)
             services.AddSecureAccessService();
 
             services.AddDistributedMemoryCache();

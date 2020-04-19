@@ -1,8 +1,10 @@
 ﻿using AdventureTourManagement.Interface;
 using AdventureTourManagement.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Models.GuestUser
 {
@@ -15,12 +17,24 @@ namespace AdventureTourManagement.Models.GuestUser
 
         }
 
-        public List<VMActivityDetails> GetActivity(string region = null)
+        public async Task<List<VMActivityDetails>> GetActivity(int region_id = 0)
         {
             var response = new List<VMActivityDetails>();
             try
             {
-                var activities_result = dbcontext.Activities.Select(x => x);
+                List<Activities> activities_result = new List<Activities>();
+                if (region_id > 0)
+                {
+                    var activityRegionMap = await dbcontext.ActivityRegionMapping.Where(x => x.region_id == region_id).ToListAsync();
+
+                    activities_result = dbcontext.Activities.Join(activityRegionMap, x => x.activity_id, y => y.activity_id, (x, y) => x).ToList();
+                }
+                else
+                {
+
+                    activities_result = dbcontext.Activities.Select(x => x).ToList();
+                }
+
                 var ratings_result = dbcontext.ActivityRatings.Select(x => x);
 
 

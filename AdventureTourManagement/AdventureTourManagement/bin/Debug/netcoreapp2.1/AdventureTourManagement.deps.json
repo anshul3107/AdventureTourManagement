@@ -28,7 +28,7 @@
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.10",
-          "SecureAccess": "1.0.0"
+          "SecureAccess": "1.0.0.0"
         },
         "runtime": {
           "AdventureTourManagement.dll": {}
@@ -344,13 +344,12 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
-      "SecureAccess/1.0.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.1",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.1"
-        },
+      "SecureAccess/1.0.0.0": {
         "runtime": {
-          "SecureAccess.dll": {}
+          "SecureAccess.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "SecureAccess.dll": {}
@@ -3618,8 +3617,8 @@
       "path": "system.linq.parallel/4.3.0",
       "hashPath": "system.linq.parallel.4.3.0.nupkg.sha512"
     },
-    "SecureAccess/1.0.0": {
-      "type": "project",
+    "SecureAccess/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

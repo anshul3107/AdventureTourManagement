@@ -1,4 +1,5 @@
 ﻿using AdventureTourManagement.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,8 @@ namespace AdventureTourManagement.ViewModels
     public class VMActivity
     {
         public IDictionary<string,List<VMActivityDetails>> Activities { get; set; }
+        public List<SelectListItem> Regions { get; set; }
+        public string RegionSelected { get; set; }
     }
 
     public class VMActivityDetails :IDisposable
