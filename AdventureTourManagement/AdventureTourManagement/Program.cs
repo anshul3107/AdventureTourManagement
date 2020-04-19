@@ -19,6 +19,11 @@ namespace AdventureTourManagement
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureLogging(logging =>
+            {
+                logging.AddAzureWebAppDiagnostics();
+                logging.AddConsole();
+            })
                 .UseStartup<Startup>();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using AdventureTourManagement.Interface;
+using AdventureTourManagement.Models.Shopping;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SecureAccess;
 using SecureAccess.Helper;
@@ -15,8 +17,11 @@ namespace AdventureTourManagement.Utility
     public class ConnectService : IConnect
     {
         EncryptionDecryption encryption;
-        public ConnectService(IServiceProvider provider)
+        ILogger<ConnectService> logger;
+
+        public ConnectService(IServiceProvider provider, ILogger<ConnectService> logger)
         {
+            this.logger = logger;
             var secureaccessFactory = new SecureAccessFactory();
             encryption = secureaccessFactory.CreateInstance(provider).SecureAccess.GetEncryptionDecryption;
         }
@@ -29,29 +34,42 @@ namespace AdventureTourManagement.Utility
 
         private async Task<NetworkKeyDTO> GetNetworkConnectDetailsAsync()
         {
-            NetworkKeyDTO result = new NetworkKeyDTO();
-            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
-            var assemblyPath = string.Empty;
-            if (assemblyFile.Contains("\\"))
+            logger.LogInformation("GetNetworkConnectDetailsAsync started");
+            try
             {
-                assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\')) + "\\Utility\\" + "ATMConnect.txt";
+                NetworkKeyDTO result = new NetworkKeyDTO();
+                string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
+                logger.LogInformation(assemblyFile);
+                var assemblyPath = string.Empty;
+                if (assemblyFile.Contains("\\"))
+                {
+                    assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\')) + "\\Utility\\" + "ATMConnect.txt";
+                    logger.LogInformation(assemblyPath);
+                }
+                else
+                {
+                    assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('/')) + "/Utility/" + "ATMConnect.txt";
+                    logger.LogInformation(assemblyPath);
+                }
+                if (File.Exists(assemblyPath))
+                {
+                    var credentials = (await File.ReadAllLinesAsync(assemblyPath)).ToList();
+                    logger.LogInformation(credentials.Aggregate((x,y)=>x+","+y));
+                    result.EncryptedUserName = credentials[0];
+                    result.EncryptedUserMessage = "encryptionkey";
+                    result.EncryptedKey = credentials[1];
+                    result.EncryptedMessage = "encryptionkey";
+
+                }
+
+                return result;
             }
-            else
+            catch (Exception ex)
             {
-                assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('/')) + "/Utility/" + "ATMConnect.txt";
+                logger.LogError(ex.Message);
+                throw;
             }
-            if (File.Exists(assemblyPath))
-            {
-                var credentials = (await File.ReadAllLinesAsync(assemblyPath)).ToList();
-
-                result.EncryptedUserName = credentials[0];
-                result.EncryptedUserMessage = "encryptionkey";
-                result.EncryptedKey = credentials[1];
-                result.EncryptedMessage = "encryptionkey";
-
-            }
-
-            return result;
+            
         }
     }
 }

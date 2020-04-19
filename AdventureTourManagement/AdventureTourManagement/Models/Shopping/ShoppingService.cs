@@ -2,6 +2,7 @@
 using AdventureTourManagement.Interface.Shopping;
 using AdventureTourManagement.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SecureAccess;
 using SecureAccess.Model;
@@ -18,12 +19,14 @@ namespace AdventureTourManagement.Models.Shopping
         private readonly ATMDbContext _dbContext;
         private Authentication authentication;
         private IConnect _connectService;
-        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider, IConnect connectService)
+        ILogger<ShoppingService> _logger;
+        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider, IConnect connectService, ILogger<ShoppingService> logger)
         {
             var secureaccessFactory = new SecureAccessFactory();
             authentication = secureaccessFactory.CreateInstance(provider).SecureAccess.GetSecureAccess;
             _dbContext = dbContext;
             _connectService = connectService;
+            _logger = logger;
         }
         public async Task<ActivityCart> AddToCart(int activityId, string userEmail = null)
         {
@@ -102,14 +105,24 @@ namespace AdventureTourManagement.Models.Shopping
 
         public async Task<Guid> AuthenticateUser(string userEmail)
         {
-            AuthenticationInput authInputs = new AuthenticationInput();
-            authInputs.AuthenticationType = Constants.AuthenticationType.Email;
-            authInputs.AuthenticationMode = Constants.AuthneticationMode.TokenBasedAuthention;
-            authInputs.Receiver = userEmail;
-            authInputs.Subject = "Adventure Tour Management Token Verification";
-            authInputs.EncryptedNetworkKeyPath = await _connectService.GetConnectionAsync();
-            var result = await authentication.Authenticate(authInputs);
-            return result;
+            _logger.LogInformation("AuthenticateUser started", new object[] { userEmail });
+            try
+            {
+                AuthenticationInput authInputs = new AuthenticationInput();
+                authInputs.AuthenticationType = Constants.AuthenticationType.Email;
+                authInputs.AuthenticationMode = Constants.AuthneticationMode.TokenBasedAuthention;
+                authInputs.Receiver = userEmail;
+                authInputs.Subject = "Adventure Tour Management Token Verification";
+                authInputs.EncryptedNetworkKeyPath = await _connectService.GetConnectionAsync();
+                var result = await authentication.Authenticate(authInputs);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+           
 
         }
 

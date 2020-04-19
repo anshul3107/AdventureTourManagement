@@ -11,53 +11,53 @@
 
     if (!Model.IsToken)
     {
-        @using (Html.BeginForm("AuthenticateUserEmail", "Shop", FormMethod.Post))
+    @using (Html.BeginForm("AuthenticateUserEmail", "Shop", FormMethod.Post))
         {
-<div>
-    @Html.Label("Email")
-    @Html.HiddenFor(x => x.IsForgetPassword)
-    @Html.HiddenFor(x => x.cartId)
-    @Html.TextBoxFor(x => x.user_email)
-    <button class="btn btn-info btn-activity" type="submit">Send Verification Email</button>
-</div>
+    <div>
+        @Html.Label("Email")
+        @Html.HiddenFor(x => x.IsForgetPassword)
+        @Html.HiddenFor(x => x.cartId)
+        @Html.TextBoxFor(x => x.user_email)
+        <button class="btn btn-info btn-activity" type="submit">Send Verification Email</button>
+    </div>
         }
     }
     else
     {
         if (!string.IsNullOrEmpty(Model.Message))
         {
-            @using (Html.BeginForm("ResendAuthToken", "Shop", FormMethod.Post))
+    @using (Html.BeginForm("ResendAuthToken", "Shop", FormMethod.Post))
             {
-<div>
+    <div>
 
-    @Html.HiddenFor(x => x.IsForgetPassword)
-    @Html.HiddenFor(x => x.userAuthID)
-    @Html.HiddenFor(x => x.cartId)
-    @Html.HiddenFor(x => x.user_email)
-    @Html.Label("OTP")
-    <label style="color:red;"> @Model.Message </label>
+        @Html.HiddenFor(x => x.IsForgetPassword)
+        @Html.HiddenFor(x => x.userAuthID)
+        @Html.HiddenFor(x => x.cartId)
+        @Html.HiddenFor(x => x.user_email)
+        @Html.Label("OTP")
+        <label style="color:red;"> @Model.Message </label>
 
-    <button class="btn btn-info btn-activity" type="submit">Resend OTP</button>
+        <button class="btn btn-info btn-activity" type="submit">Resend OTP</button>
 
-</div>
+    </div>
             }
         }
         else
         {
-            @using (Html.BeginForm("VerifyTokenAsync", "Shop", FormMethod.Post))
+    @using (Html.BeginForm("VerifyTokenAsync", "Shop", FormMethod.Post))
             {
-<div>
-    @Html.HiddenFor(x => x.IsForgetPassword)
-    @Html.Label("OTP")
-    @Html.TextBoxFor(x => x.Token)
-    @Html.HiddenFor(x => x.cartId)
+    <div>
+        @Html.HiddenFor(x => x.IsForgetPassword)
+        @Html.Label("OTP")
+        @Html.TextBoxFor(x => x.Token)
+        @Html.HiddenFor(x => x.cartId)
 
-    @Html.HiddenFor(x => x.userAuthID)
+        @Html.HiddenFor(x => x.userAuthID)
 
-    @Html.HiddenFor(x => x.user_email)
-    <button class="btn btn-info btn-activity" type="submit">Submit</button>
+        @Html.HiddenFor(x => x.user_email)
+        <button class="btn btn-info btn-activity" type="submit">Submit</button>
 
-</div>
+    </div>
             }
         }
     }

@@ -64,13 +64,20 @@ namespace SecureAccess.Helper
 
             string eToken = coded.EncryptText(token,"encryptionKey");
 
-            string filepath = "\\TransactFiles\\" + transactionId + ".txt";
+            //string filepath = "\\TransactFiles\\" + transactionId + ".txt";
 
-            if (! Directory.Exists("\\TransactFiles"))
+            string filepath = "/local/temp/" + transactionId + ".txt";
+
+            if (!Directory.Exists("/local/temp/"))
             {
-                Directory.CreateDirectory("\\TransactFiles");
+                Directory.CreateDirectory("/local/temp/");
             }
-            
+
+            //if (! Directory.Exists("\\TransactFiles"))
+            //{
+            //    Directory.CreateDirectory("\\TransactFiles");
+            //}
+
             if (! File.Exists(filepath))
             {
                await File.WriteAllTextAsync(filepath, eToken);

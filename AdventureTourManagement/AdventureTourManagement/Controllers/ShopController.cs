@@ -3,6 +3,7 @@ using AdventureTourManagement.Models;
 using AdventureTourManagement.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SecureAccess;
 using SecureAccess.Model;
 using System;
@@ -14,10 +15,11 @@ namespace AdventureTourManagement.Controllers
     public class ShopController : Controller
     {
         IShopping _shopping;
-
-        public ShopController(IShopping shopping)
+        ILogger<ShopController> _logger;
+        public ShopController(IShopping shopping,ILogger<ShopController> logger)
         {
             _shopping = shopping;
+            _logger = logger;
         }
 
         // buy Now
@@ -52,25 +54,35 @@ namespace AdventureTourManagement.Controllers
             return RedirectToAction("GetUserDetails", new { isForgetPassword = 0 , cartId = result.Id });
         }
 
+        [HttpPost]
         public async Task<ActionResult> AuthenticateUserEmail(VMUserDetail email)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            _logger.LogInformation("AuthenticateUserEmail started", new object[] { email });
+            try
             {
-                var tokenId = await _shopping.AuthenticateUser(email.user_email);
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+                {
+                    var tokenId = await _shopping.AuthenticateUser(email.user_email);
 
-                VMUserDetail user_details = new VMUserDetail();
-                user_details.user_email = email.user_email;
-                user_details.userAuthID = tokenId;
-                user_details.IsToken = true;
-                user_details.IsForgetPassword = email.IsForgetPassword;
-                user_details.cartId = email.cartId;
-                ModelState.Clear();
-                return this.View("GetUserDetails", user_details);
+                    VMUserDetail user_details = new VMUserDetail();
+                    user_details.user_email = email.user_email;
+                    user_details.userAuthID = tokenId;
+                    user_details.IsToken = true;
+                    user_details.IsForgetPassword = email.IsForgetPassword;
+                    user_details.cartId = email.cartId;
+                    ModelState.Clear();
+                    return this.View("GetUserDetails", user_details);
+                }
+                else
+                    return View("error");
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, new object[] { email });
+                throw ex;
             }
-            else
-                return View("error");
         }
 
+        [HttpPost]
         public async Task<ActionResult> ResendAuthToken(VMUserDetail email)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
@@ -91,40 +103,52 @@ namespace AdventureTourManagement.Controllers
                 return View("Error");
         }
 
+        [HttpPost]
         public async Task<ActionResult> VerifyTokenAsync(VMUserDetail email)
         {
-
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            _logger.LogInformation("VerifyTokenAsync started", new object[] { email });
+            try
             {
-
-                bool verificationresult = await _shopping.VerifyUserToken(email.user_email, email.userAuthID, email.Token);
-
-                if (verificationresult)
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
                 {
-                    if (email.IsForgetPassword > 0)
+
+                    bool verificationresult = await _shopping.VerifyUserToken(email.user_email, email.userAuthID, email.Token);
+
+                    if (verificationresult)
                     {
-                        return RedirectToAction("UpdateUserPasswordView", "User", new { userEmail  = email.user_email});
+                        if (email.IsForgetPassword > 0)
+                        {
+                            return RedirectToAction("UpdateUserPasswordView", "User", new { userEmail = email.user_email });
+                        }
+                        else
+                        {
+                            await _shopping.SendBookingConfirmation(email.user_email, email.cartId);
+
+                            return this.View(verificationresult);
+                        }
                     }
                     else
                     {
-                        await _shopping.SendBookingConfirmation(email.user_email,email.cartId);
 
-                        return this.View(verificationresult);
+                        VMUserDetail user_details = new VMUserDetail();
+                        user_details.user_email = email.user_email;
+                        user_details.IsToken = true;
+                        user_details.Message = "Invalid token";
+
+                        return this.View("GetUserDetails", user_details);
                     }
                 }
                 else
-                {
-                   
-                    VMUserDetail user_details = new VMUserDetail();
-                    user_details.user_email = email.user_email;
-                    user_details.IsToken = true;
-                    user_details.Message = "Invalid token";
-
-                    return this.View("GetUserDetails", user_details);
-                }
+                    return View("Error");
             }
-            else
-                return View("Error");
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.Message, new object[] { email });
+                throw ex;
+            }
+
+          
         }
 
         // proceed to checkout --> place order

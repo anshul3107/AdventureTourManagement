@@ -4,6 +4,7 @@ using SecureAccess.Helper;
 using SecureAccess.Model;
 using System;
 using System.IO;
+using System.Net.Security;
 using System.Threading.Tasks;
 
 namespace SecureAccess
@@ -34,9 +35,12 @@ namespace SecureAccess
             TwoStepAuth auth = new TwoStepAuth();
             EncryptionDecryption verifyToken = auth.GetEncryptionDecryption;
 
-            string filepath = "\\TransactFiles\\" + verifInputs.TransactionIdentifier + ".txt";
+            //string filepath = "\\TransactFiles\\" + verifInputs.TransactionIdentifier + ".txt";
 
-           // verifyToken.FileDecryption(filepath);
+            
+
+            string filepath = "/local/temp/" + verifInputs.TransactionIdentifier + ".txt";
+            // verifyToken.FileDecryption(filepath);
 
             DateTime fileCreationDate = File.GetCreationTime(filepath);
 
