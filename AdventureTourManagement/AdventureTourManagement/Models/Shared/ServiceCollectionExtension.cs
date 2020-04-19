@@ -3,6 +3,7 @@ using AdventureTourManagement.Interface.Shopping;
 using AdventureTourManagement.Interface.User;
 using AdventureTourManagement.Models.GuestUser;
 using AdventureTourManagement.Models.Shopping;
+using AdventureTourManagement.Utility;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace AdventureTourManagement.Models.Shared
             services.AddScoped<RecommendedActivities>();
 
             services.AddScoped<IShopping, ShoppingService>();
-
+            services.AddScoped<IConnect, ConnectService>();
             services.AddScoped<Func<string, IActivityService>>(serviceProvider => key =>
             {
                 switch (key)

@@ -28,7 +28,7 @@ namespace SecureAccess.Helper
 
             messageDTO.MailSubject = input.Subject;
             messageDTO.MailTo = input.Receiver;
-
+            messageDTO.EncryptedNetworkKeyPath = input.EncryptedNetworkKeyPath;
             SendCommunications comms = new SendCommunications();
             await comms.SendEmail(messageDTO);
 

@@ -25,9 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="SecureAccess">
-      <HintPath>..\Dependency\SecureAccess.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\SecureAccess\SecureAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Utility\ATMConnect.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using SecureAccess.Helper;
+﻿using Newtonsoft.Json;
+using SecureAccess.Helper;
+using SecureAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +24,7 @@ namespace SecureAccess.Service
                 message.Subject = emailDTO.MailSubject;
                 message.Body = emailDTO.MailMessage;
                 message.From = new MailAddress("adventuretourmanagement@gmail.com");
-                SmtpClient client = await EmailConnection();
+                SmtpClient client = await EmailConnection(emailDTO.EncryptedNetworkKeyPath);
                 client.EnableSsl = true;
                 await client.SendMailAsync(message);
             }
@@ -32,22 +34,18 @@ namespace SecureAccess.Service
             }
         }
 
-        private async Task<SmtpClient> EmailConnection()
+        private async Task<SmtpClient> EmailConnection(string encryptedKey)
         {
             try
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
                 EncryptionDecryption encryption = EncryptionDecryption.CreateInstance();
-                string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
-                var assemblyPath = assemblyFile.Substring(0, assemblyFile.LastIndexOf('\\')) + "\\SAConnect\\" + "SAConnect.txt";
-                //var credPath_1 = Path.Combine(assemblyPath, "SAConnect");
-                //var credPath = Path.Combine(credPath_1, "SAConnect.txt" );
-                if (File.Exists(assemblyPath))
+                
+                if (!string.IsNullOrEmpty(encryptedKey))
                 {
-                    var credentials = (await File.ReadAllLinesAsync(assemblyPath)).ToList();
-                    var temp = encryption.DecryptText(credentials[0], "encryptionkey");
-                    var temp2 = encryption.DecryptText(credentials[1], "encryptionkey");
-                    client.Credentials = new NetworkCredential(encryption.DecryptText(credentials[0], "encryptionkey"), encryption.DecryptText(credentials[1], "encryptionkey"));
+                    NetworkKeyDTO creds = JsonConvert.DeserializeObject<NetworkKeyDTO>(encryptedKey);
+                    client.Credentials = new NetworkCredential(encryption.DecryptText(creds.EncryptedUserName, creds.EncryptedUserMessage),
+                        encryption.DecryptText(creds.EncryptedKey,creds.EncryptedMessage));
                 }
 
                 return client;
@@ -60,10 +58,5 @@ namespace SecureAccess.Service
             }
         }
     }
-    public class EmailDTO
-    {
-        public string MailTo { get; set; }
-        public string MailSubject { get; set; }
-        public string MailMessage { get; set; }
-    }
+   
 }

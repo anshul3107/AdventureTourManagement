@@ -1,4 +1,5 @@
-﻿using AdventureTourManagement.Interface.Shopping;
+﻿using AdventureTourManagement.Interface;
+using AdventureTourManagement.Interface.Shopping;
 using AdventureTourManagement.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -16,11 +17,13 @@ namespace AdventureTourManagement.Models.Shopping
     {
         private readonly ATMDbContext _dbContext;
         private Authentication authentication;
-        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider)
+        private IConnect _connectService;
+        public ShoppingService(ATMDbContext dbContext, IServiceProvider provider,IConnect connectService)
         {
             var secureaccessFactory = new SecureAccessFactory();
             authentication = secureaccessFactory.CreateInstance(provider).SecureAccess.GetSecureAccess;
             _dbContext = dbContext;
+            _connectService = connectService;
         }
         public async Task<ActivityCart> AddToCart(int activityId, string userEmail = null)
         {
@@ -97,15 +100,15 @@ namespace AdventureTourManagement.Models.Shopping
             return dto;
         }
 
-        public Task<Guid> AuthenticateUser(string userEmail)
+        public async Task<Guid> AuthenticateUser(string userEmail)
         {
             AuthenticationInput authInputs = new AuthenticationInput();
             authInputs.AuthenticationType = Constants.AuthenticationType.Email;
             authInputs.AuthenticationMode = Constants.AuthneticationMode.TokenBasedAuthention;
             authInputs.Receiver = userEmail;
             authInputs.Subject = "Adventure Tour Management Token Verification";
-
-            var result = authentication.Authenticate(authInputs);
+            authInputs.EncryptedNetworkKeyPath = await _connectService.GetConnectionAsync();
+            var result = await authentication.Authenticate(authInputs);
             return result;
 
         }
@@ -186,8 +189,8 @@ namespace AdventureTourManagement.Models.Shopping
             {
                 MailMessage = mailText,
                 MailSubject = "Booking Confirmation Email",
-                MailTo = userEmail
-                
+                MailTo = userEmail,
+                EncryptedNetworkKeyPath = await _connectService.GetConnectionAsync()
             };
             await comms.SendEmail(dto);
         }
