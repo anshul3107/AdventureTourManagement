@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TDruVpKSQWpmHR/AkLy9IrXxnH6Lk07CY2WAek0mwZadRH5FX5eIrJtfRltHIwuKdkaBzenFeYK8iZxNODCQhA==",
+  "dgSpecHash": "6zt2cGXVsUoNlGs3xIDDOYqyfh3hlqJHQayXfk+UqPb00VvTcmpoGmXfbfDcsHBmnpKUe0SwPtssh/CTZxmV8w==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Project_final\\AdventureTourManagement\\AdventureTourManagement\\AdventureTourManagement.Test\\AdventureTourManagement.Test.csproj",
   "expectedPackageFiles": [
@@ -76,7 +76,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\anshul\\.nuget\\packages\\moq\\4.13.1\\moq.4.13.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\anshul\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
     "C:\\Users\\anshul\\.nuget\\packages\\nuget.frameworks\\5.0.0\\nuget.frameworks.5.0.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
