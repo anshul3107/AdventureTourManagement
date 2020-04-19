@@ -11,7 +11,7 @@
     @{
         if (Model.CartItem != null && Model.CartItem.Count > 0)
         {
-            @Html.ActionLink("Place Order", "GetUserDetails", "Shop", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Place Order", "GetUserDetails", "Shop", new {isForgetPassword = 0, cartId = Model.CartId}, new { @class = "btn btn-primary" })
         }
     }
 </div>
