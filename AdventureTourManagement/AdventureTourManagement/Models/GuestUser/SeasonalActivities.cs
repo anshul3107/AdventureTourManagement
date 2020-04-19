@@ -27,9 +27,9 @@ namespace AdventureTourManagement.Models.GuestUser
 
                 var seasonalActivity = activitiesBooked.Select(x => new SeasonalActivity { activities = x.activities, booking_id = x.booking.booking_id, season = GetSeason(x.booking.booking_date) }).ToList();
 
-                var currentSEason = GetSeason(DateTime.Now);
+                var currentSeason = GetSeason(DateTime.Now);
 
-                seasonalActivity = seasonalActivity.Where(x => x.season == currentSEason).ToList();
+                seasonalActivity = seasonalActivity.Where(x => x.season == currentSeason).ToList();
 
                 var seasonalActivitiesgrouped = (from a in seasonalActivity
                                                  group a by new { activityID = a.activities.activity_id, season = a.season } into x
