@@ -1,5 +1,0 @@
-C:\Users\Anshul\Documents\GitHub\ADSM1\ADSM.Lib\bin\Debug\ADSM.Lib.dll
-C:\Users\Anshul\Documents\GitHub\ADSM1\ADSM.Lib\bin\Debug\ADSM.Lib.pdb
-C:\Users\Anshul\Documents\GitHub\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib.csprojAssemblyReference.cache
-C:\Users\Anshul\Documents\GitHub\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib.dll
-C:\Users\Anshul\Documents\GitHub\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib.pdb

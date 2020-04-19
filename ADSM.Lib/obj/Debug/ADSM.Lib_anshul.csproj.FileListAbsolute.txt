@@ -1,6 +1,0 @@
-\\Mac\Home\Documents\ADSM1\ADSM.Lib\bin\Debug\ADSM.Lib.dll
-\\Mac\Home\Documents\ADSM1\ADSM.Lib\bin\Debug\ADSM.Lib.pdb
-\\Mac\Home\Documents\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib_anshul.csprojAssemblyReference.cache
-\\Mac\Home\Documents\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib_anshul.csproj.CoreCompileInputs.cache
-\\Mac\Home\Documents\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib.dll
-\\Mac\Home\Documents\ADSM1\ADSM.Lib\obj\Debug\ADSM.Lib.pdb
