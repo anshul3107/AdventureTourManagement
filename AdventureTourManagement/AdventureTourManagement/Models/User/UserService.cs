@@ -79,8 +79,8 @@ namespace AdventureTourManagement.Models
         public async Task<VmUser> GetUserProfile(string user_email)
         {
             var entity = await _dbContext.User.AsNoTracking().Where(x => x.user_email == user_email).FirstOrDefaultAsync();
-            
-           var retUser =  new VmUser(entity);
+
+            var retUser = new VmUser(entity);
             retUser.DecryptedUserEmail = retUser.UserEmail;
             retUser.UserEmail = _encryption.EncryptText(retUser.DecryptedUserEmail, ATMConstants.emailEncKey);
             return retUser;
@@ -192,7 +192,7 @@ namespace AdventureTourManagement.Models
             else
             {
                 vUser = new VmUser();
-                vUser.Message = "Invali email/password";
+                vUser.Message = "Invalid email/password";
             }
 
             return vUser;

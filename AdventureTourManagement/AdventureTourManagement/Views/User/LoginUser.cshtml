@@ -4,10 +4,10 @@
     Layout = "~/Views/Shared/Master.cshtml";
 }
 
-<table>
+<table class="table mb-0" style="width: 40%;">
     <tr>
     @{ 
-        @Html.ActionLink("Logoff","Index","User",null)
+        @Html.ActionLink("Logoff","Index","User",null, new { @class="btn btn-primary mb-3" })
     }
     </tr>
     <tr>
@@ -35,17 +35,16 @@
         </td>
     </tr>
 </table>
-<br />
-<table>
+<table class="table" style="width: 40%;">
     <tr>
         <td>
-            @Html.ActionLink("Update Details", "UpdateUserDetailView", "User", new { userEmail = Model.UserEmail })
+            @Html.ActionLink("Update Details", "UpdateUserDetailView", "User", new { userEmail = Model.UserEmail }, new {@class="btn btn-primary"})
         </td>
         <td>
-            @Html.ActionLink("Change Password", "UpdateUserPasswordView", "User", new { userEmail = Model.UserEmail })
+            @Html.ActionLink("Change Password", "UpdateUserPasswordView", "User", new { userEmail = Model.UserEmail }, new {@class="btn btn-primary"})
         </td>
         <td>
-            @Html.ActionLink("View Booking History", "GetBookingHistory", "User", new { userEmail = Model.UserEmail })
+            @Html.ActionLink("View Booking History", "GetBookingHistory", "User", new { userEmail = Model.UserEmail }, new {@class="btn btn-primary"})
         </td>
     </tr>
 </table>
