@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm("UpdateUserDetail", "User", FormMethod.Post))
 {
-    @Html.HiddenFor(x => x.UserEmail)
+    @Html.HiddenFor(x => x.DecryptedUserEmail)
     <table>
         <tr>
             <td> Name : </td>
@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <td> Email : </td>
-            <td> <label> @Model.UserEmail</label></td>
+            <td> <label> @Model.DecryptedUserEmail</label></td>
         </tr>
         <tr>
             <td colspan="2">

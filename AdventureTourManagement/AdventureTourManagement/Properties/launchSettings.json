@@ -18,7 +18,7 @@
     "AdventureTourManagement": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "GuestDashboard/Index",
+      "launchUrl": "User/Index",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

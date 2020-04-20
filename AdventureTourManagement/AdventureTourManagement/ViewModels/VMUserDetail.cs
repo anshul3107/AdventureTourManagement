@@ -1,5 +1,4 @@
 ﻿using AdventureTourManagement.Models;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +28,7 @@ namespace AdventureTourManagement.ViewModels
         [Required(ErrorMessage = "Secret Message cannot be empty")]
         public string UserEncryptionMessage { get; set; }
         public string Message { get; set; }
+        public string DecryptedUserEmail { get; set; }
 
         public VmUser(User userDets)
         {

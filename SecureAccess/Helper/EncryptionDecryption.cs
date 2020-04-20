@@ -31,36 +31,14 @@ namespace SecureAccess.Helper
         public bool CompareStrings(string input, string sourceText, string passKey)
         {
             var diText = DecryptText(sourceText, passKey);
-           
+            var dinput = DecryptText(input, passKey);
 
-            if (diText.Equals(input))
+
+            if (diText.Equals(dinput))
                 return true;
-            else return false;
+            else
+                return false;
 
-            //var tmpSource1 = Encoding.UTF8.GetBytes(text1);
-
-            //byte[] tmpNewHash  = SHA256.Create().ComputeHash(tmpSource1);
-
-
-            //var tmpSource2 = Encoding.UTF8.GetBytes(text2);
-
-            //byte[] tmpNewHash2 = SHA256.Create().ComputeHash(tmpSource2);
-
-            //bool bEqual = false;
-            //if (tmpNewHash.Length == tmpNewHash2.Length)
-            //{
-            //    int i = 0;
-            //    while ((i < tmpNewHash.Length) && (tmpNewHash[i] == tmpNewHash2[i]))
-            //    {
-            //        i += 1;
-            //    }
-            //    if (i == tmpNewHash.Length)
-            //    {
-            //        bEqual = true;
-            //    }
-            //}
-
-           // return bEqual;
 
         }
 
@@ -77,7 +55,7 @@ namespace SecureAccess.Helper
 
             byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
             string result = Convert.ToBase64String(bytesEncrypted);
-            
+
             return result;
         }
 

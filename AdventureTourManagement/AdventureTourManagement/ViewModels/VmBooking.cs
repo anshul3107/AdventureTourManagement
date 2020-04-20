@@ -14,6 +14,7 @@ namespace AdventureTourManagement.ViewModels
         public string ActivityImage { get; set; }
         public DateTime BookingDate { get; set; }
         public string UserEmail { get; set; }
+        public string DecryptedUserEmail { get; set; }
     }
 
     public class VmBookinglist

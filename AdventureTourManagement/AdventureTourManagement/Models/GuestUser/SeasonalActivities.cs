@@ -49,21 +49,21 @@ namespace AdventureTourManagement.Models.GuestUser
 
                 var seasonalActivitiesgrouped = (from a in seasonalActivity
                                                  group a by new { activityID = a.activities.activity_id, season = a.season } into x
-                                                 select new { activityId = x.Key.activityID, activityCount = x.Count(), activitySeason = x.Key.season }).AsEnumerable();
+                                                 select new { activityId = x.Key.activityID, activityCount = x.Count(), activitySeason = x.Key.season}).AsEnumerable();
 
-                var activitySeason = seasonalActivitiesgrouped.Join(seasonalActivity, x => x.activityId, y => y.activities.activity_id, (x, y) => new { y.activities.activity_name, y.activities.activity_id, y.season, x.activityCount }).ToList();
+              //  var activitySeason = seasonalActivitiesgrouped.Join(seasonalActivity, x => x.activityId, y => y.activities.activity_id, (x, y) => new { y.activities.activity_name, y.activities.activity_id, y.season, x.activityCount }).ToList();
 
-                var topSeasonalActivity = activitySeason.OrderByDescending(x => x.activityCount).Take(3).ToList();
+                var topSeasonalActivity = seasonalActivitiesgrouped.OrderByDescending(x => x.activityCount).Take(3).ToList();
 
                 List<VMActivityDetails> aresult = new List<VMActivityDetails>();
                 foreach (var item in topSeasonalActivity)
                 {
                     VMActivityDetails activityItem = new VMActivityDetails();
-                    activityItem.activity_id = item.activity_id;
-                    activityItem.activity_name = item.activity_name;
+                    activityItem.activity_id = item.activityId;
+                    activityItem.activity_name = activities.Where(x=>x.activity_id == item.activityId).FirstOrDefault().activity_name;
                     //activityItem.ActivityAvgRating = item.avgrating;
                     //activityItem.ActivityFee = item.activity_fee;
-                    activityItem.activity_season = item.season;
+                    activityItem.activity_season = item.activitySeason;
                     aresult.Add(activityItem);
                 }
 

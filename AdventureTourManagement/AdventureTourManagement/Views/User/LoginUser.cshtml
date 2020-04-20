@@ -6,6 +6,11 @@
 
 <table>
     <tr>
+    @{ 
+        @Html.ActionLink("Logoff","Index","User",null)
+    }
+    </tr>
+    <tr>
         <td>
             Name :
         </td>
@@ -18,7 +23,7 @@
             Email :
         </td>
         <td>
-            <label>@Model.UserEmail</label>
+            <label>@Model.DecryptedUserEmail</label>
         </td>
     </tr>
     <tr>
@@ -37,10 +42,10 @@
             @Html.ActionLink("Update Details", "UpdateUserDetailView", "User", new { userEmail = Model.UserEmail })
         </td>
         <td>
-    @Html.ActionLink("Change Password", "UpdateUserPasswordView", "User", new { userEmail = Model.UserEmail })
+            @Html.ActionLink("Change Password", "UpdateUserPasswordView", "User", new { userEmail = Model.UserEmail })
         </td>
         <td>
-            @Html.ActionLink("View Booking History", "GetBookingHistory","User",new { userEmail = Model.UserEmail})
+            @Html.ActionLink("View Booking History", "GetBookingHistory", "User", new { userEmail = Model.UserEmail })
         </td>
     </tr>
 </table>

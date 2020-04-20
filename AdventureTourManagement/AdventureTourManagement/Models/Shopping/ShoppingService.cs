@@ -1,10 +1,12 @@
 ﻿using AdventureTourManagement.Interface;
 using AdventureTourManagement.Interface.Shopping;
+using AdventureTourManagement.Utility;
 using AdventureTourManagement.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SecureAccess;
+using SecureAccess.Helper;
 using SecureAccess.Model;
 using SecureAccess.Service;
 using System;
@@ -20,10 +22,12 @@ namespace AdventureTourManagement.Models.Shopping
         private Authentication authentication;
         private IConnect _connectService;
         ILogger<ShoppingService> _logger;
+        EncryptionDecryption _encryption;
         public ShoppingService(ATMDbContext dbContext, IServiceProvider provider, IConnect connectService, ILogger<ShoppingService> logger)
         {
             var secureaccessFactory = new SecureAccessFactory();
             authentication = secureaccessFactory.CreateInstance(provider).SecureAccess.GetSecureAccess;
+            _encryption = secureaccessFactory.CreateInstance(provider).SecureAccess.GetEncryptionDecryption;
             _dbContext = dbContext;
             _connectService = connectService;
             _logger = logger;
@@ -122,8 +126,6 @@ namespace AdventureTourManagement.Models.Shopping
                 _logger.LogError(ex.Message);
                 throw;
             }
-           
-
         }
 
         public async Task<List<VmBooking>> FetchAllOrders(string userEmail)
@@ -137,7 +139,8 @@ namespace AdventureTourManagement.Models.Shopping
                 ActivityDesc = a.activity_description,
                 BookingDate = b.booking_date,
                 ActivityImage = a.activity_image_path,
-                UserEmail = b.user_name
+                UserEmail = _encryption.EncryptText(b.user_name,ATMConstants.emailEncKey),
+                DecryptedUserEmail = b.user_name
             }).ToList();
             return result;
         }

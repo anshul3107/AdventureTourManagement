@@ -1,10 +1,12 @@
 ﻿using AdventureTourManagement.Interface.Shopping;
 using AdventureTourManagement.Models;
+using AdventureTourManagement.Utility;
 using AdventureTourManagement.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SecureAccess;
+using SecureAccess.Helper;
 using SecureAccess.Model;
 using System;
 using System.Linq;
@@ -16,28 +18,39 @@ namespace AdventureTourManagement.Controllers
     {
         IShopping _shopping;
         ILogger<ShopController> _logger;
-        public ShopController(IShopping shopping,ILogger<ShopController> logger)
+        EncryptionDecryption _encryption;
+        
+        public ShopController(IShopping shopping, ILogger<ShopController> logger, IServiceProvider provider)
         {
             _shopping = shopping;
             _logger = logger;
+
+            SecureAccessFactory sa = new SecureAccessFactory();
+            _encryption = sa.CreateInstance(provider).SecureAccess.GetEncryptionDecryption;
         }
 
         // buy Now
         // Place order
         public ActionResult GetUserDetails(int isForgetPassword, int cartId = 0)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            VMUserDetail user_details = new VMUserDetail();
+            user_details.IsToken = false;
+            user_details.IsForgetPassword = isForgetPassword;
+            user_details.cartId = cartId;
+
+            if (isForgetPassword == 1)
             {
-                VMUserDetail user_details = new VMUserDetail();
-                user_details.IsToken = false;
-                user_details.IsForgetPassword = isForgetPassword;
-                user_details.cartId = cartId;
+                return View(user_details);
+            }
+            else if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
                 return this.View(user_details);
             }
             else
             {
-                return View("error");
+                return View("Error");
             }
+
         }
 
         public async Task<ActionResult> BuyNowAsync(int activityId)
@@ -51,7 +64,7 @@ namespace AdventureTourManagement.Controllers
 
             var result = await _shopping.AddToCart(activityId, userEmail);
 
-            return RedirectToAction("GetUserDetails", new { isForgetPassword = 0 , cartId = result.Id });
+            return RedirectToAction("GetUserDetails", new { isForgetPassword = 0, cartId = result.Id });
         }
 
         [HttpPost]
@@ -60,6 +73,12 @@ namespace AdventureTourManagement.Controllers
             _logger.LogInformation("AuthenticateUserEmail started", new object[] { email });
             try
             {
+                if(email.IsForgetPassword == 1)
+                {
+                    HttpContext.Session.SetString("CurrentUser", email.user_email);
+                    HttpContext.Session.CommitAsync().Wait();
+                }
+
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
                 {
                     var tokenId = await _shopping.AuthenticateUser(email.user_email);
@@ -75,7 +94,8 @@ namespace AdventureTourManagement.Controllers
                 }
                 else
                     return View("error");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message, new object[] { email });
                 throw ex;
@@ -111,14 +131,13 @@ namespace AdventureTourManagement.Controllers
             {
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
                 {
-
                     bool verificationresult = await _shopping.VerifyUserToken(email.user_email, email.userAuthID, email.Token);
 
                     if (verificationresult)
                     {
                         if (email.IsForgetPassword > 0)
                         {
-                            return RedirectToAction("UpdateUserPasswordView", "User", new { userEmail = email.user_email });
+                            return RedirectToAction("UpdateUserPasswordView", "User", new { userEmail = _encryption.EncryptText(email.user_email,ATMConstants.emailEncKey) });
                         }
                         else
                         {
@@ -148,11 +167,11 @@ namespace AdventureTourManagement.Controllers
                 throw ex;
             }
 
-          
+
         }
 
         // proceed to checkout --> place order
-        
+
         public async Task<ActionResult> ViewShoppingCart()
         {
             string userEmail = string.Empty;
@@ -163,7 +182,7 @@ namespace AdventureTourManagement.Controllers
             }
 
             var result = await _shopping.FetchShoppingCart(userEmail);
-            
+
             return View(result);
         }
 
@@ -177,9 +196,9 @@ namespace AdventureTourManagement.Controllers
                 userEmail = HttpContext.Session.GetString("CurrentUser");
             }
 
-            var result = await _shopping.AddToCart(activityId,userEmail);
+            var result = await _shopping.AddToCart(activityId, userEmail);
 
-            var vmObj = ActivityCartDTO.TransformcartItem(result,activityId);
+            var vmObj = ActivityCartDTO.TransformcartItem(result, activityId);
             return View(vmObj);
         }
 
@@ -193,10 +212,9 @@ namespace AdventureTourManagement.Controllers
                 userEmail = HttpContext.Session.GetString("CurrentUser");
             }
 
-            
             await _shopping.RemoveFromCart(activityId, userEmail);
 
-           return RedirectToAction("ViewShoppingCart");
+            return RedirectToAction("ViewShoppingCart");
         }
 
     }

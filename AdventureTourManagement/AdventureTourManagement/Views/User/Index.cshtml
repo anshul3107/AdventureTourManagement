@@ -4,13 +4,15 @@
     Layout = "~/Views/Shared/Master.cshtml";
 }
 <style>
-    .authPage{
+    .authPage {
         width: 800px;
     }
+
     .guestBlock {
         border-right: 1px solid grey;
         text-align: center;
     }
+
     .cutomBtn {
         padding: 11px 5px;
         font-size: 15px;
@@ -18,43 +20,50 @@
 </style>
 @using (Html.BeginForm("LoginUser", "User", FormMethod.Post))
 {
-<div class="mx-auto authPage">
-    <div class="row">
-        <div class="col-md-6 guestBlock">
-            <h1 style="display: inline-block">Guest Users</h1>
-            <div class="row">
-                <div class="col-md-6 mx-auto">
-                    @Html.ActionLink("Continue as guest", "Index", "GuestDashboard", null, new { @class = "cutomBtn col-md-12 btn btn-primary btn-xs" })
+    <div class="mx-auto authPage">
+        <div class="row">
+            <div class="col-md-6 guestBlock">
+                <h1 style="display: inline-block">Guest Users</h1>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        @Html.ActionLink("Continue as guest", "Index", "GuestDashboard", null, new { @class = "cutomBtn col-md-12 btn btn-primary btn-xs" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 userBlock">
+                <div style="text-align:center">
+                    <h1 style="display: inline-block">Returning Users</h1>
+                </div>
+                <div class="row">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        @{
+                            if (!string.IsNullOrEmpty(Model.Message))
+                            {
+                                <label style="color:red;">@Model.Message</label>
+                            }
+
+                        }
+                        <label class="col-md-4">Email ID</label> @Html.TextBoxFor(x => x.UserEmail, null, new { @class = "col-md-8" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="col-md-4">Password</label> @Html.PasswordFor(x => x.UserEncyryptedKey, new { @class = "col-md-8" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="col-md-12 mx-auto mb-3 cutomBtn">Login</button>
+                        @Html.ActionLink("Forgot Password", "ForgotPassword", "User", null, new { @class = "cutomBtn mb-3 col-md-12 mx-auto btn btn-primary btn-xs" })
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        @Html.ActionLink("New User", "RegisterNewUserView", "User", null, new { @class = "cutomBtn col-md-12 mx-auto btn btn-primary btn-xs" })
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 userBlock">
-            <div style="text-align:center">
-                <h1 style="display: inline-block">Returning Users</h1>
-            </div>
-            <div class="row">
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="col-md-4">Email ID</label> @Html.TextBoxFor(x => x.UserEmail, null, new { @class = "col-md-8" })
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="col-md-4">Password</label> @Html.PasswordFor(x => x.UserEncyryptedKey, new { @class = "col-md-8" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="col-md-12 mx-auto mb-3 cutomBtn">Login</button>
-                    @Html.ActionLink("Forgot Password", "ForgotPassword", "User", null, new { @class = "cutomBtn mb-3 col-md-12 mx-auto btn btn-primary btn-xs" })
-                </div>
-                <div class="col-md-12 mb-3">
-                    @Html.ActionLink("New User", "RegisterNewUserView", "User", null, new { @class = "cutomBtn col-md-12 mx-auto btn btn-primary btn-xs" })
-                </div>
-            </div>
-        </div>
+
     </div>
-    
-</div>
 }

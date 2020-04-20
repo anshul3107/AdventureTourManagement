@@ -9,6 +9,7 @@ using SecureAccess;
 using SecureAccess.Helper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
+using AdventureTourManagement.Utility;
 
 namespace AdventureTourManagement.Models
 {
@@ -16,7 +17,7 @@ namespace AdventureTourManagement.Models
     {
         private ATMDbContext _dbContext;
         private EncryptionDecryption _encryption;
-        public UserService(ATMDbContext dbContext,IServiceProvider provider)
+        public UserService(ATMDbContext dbContext, IServiceProvider provider)
         {
             _dbContext = dbContext;
             var secureaccessFactory = new SecureAccessFactory();
@@ -24,11 +25,11 @@ namespace AdventureTourManagement.Models
         }
 
         public async Task<VmUser> AddNewUser(VmUser userInput)
-            {
+        {
             VmUser retUser = null;
-            
 
-           if(!string.IsNullOrEmpty( userInput.UserEmail) && !(string.IsNullOrEmpty(userInput.UserEncyryptedKey)))
+
+            if (!string.IsNullOrEmpty(userInput.UserEmail) && !(string.IsNullOrEmpty(userInput.UserEncyryptedKey)))
             {
                 var checkUserExists = await _dbContext.User.AsNoTracking().Where(x => x.user_email == userInput.UserEmail).FirstOrDefaultAsync();
                 if (checkUserExists != null)
@@ -47,15 +48,17 @@ namespace AdventureTourManagement.Models
                         user_contact = userInput.UserContact,
                         user_encryptedkey = _encryption.EncryptText(userInput.UserEncyryptedKey, userInput.UserEncryptionMessage),
                         user_encryptedmessage = _encryption.EncryptText(userInput.UserEncryptionMessage, masterKey),
-                    user_name = userInput.UserName
+                        user_name = userInput.UserName
                     };
 
                     var execResult = await _dbContext.User.AddAsync(entity);
                     await _dbContext.SaveChangesAsync();
 
-                    if(execResult.Entity != null)
+                    if (execResult.Entity != null)
                     {
                         retUser = new VmUser(execResult.Entity);
+                        retUser.DecryptedUserEmail = retUser.UserEmail;
+                        retUser.UserEmail = _encryption.EncryptText(retUser.DecryptedUserEmail, ATMConstants.emailEncKey);
                         retUser.Message = "User Added Successfully";
                         return retUser;
                     }
@@ -63,7 +66,7 @@ namespace AdventureTourManagement.Models
                 }
 
             }
-           else
+            else
             {
                 retUser = new VmUser();
                 retUser.Message = "User Email and password cannot be blank";
@@ -76,8 +79,11 @@ namespace AdventureTourManagement.Models
         public async Task<VmUser> GetUserProfile(string user_email)
         {
             var entity = await _dbContext.User.AsNoTracking().Where(x => x.user_email == user_email).FirstOrDefaultAsync();
-
-            return new VmUser(entity);
+            
+           var retUser =  new VmUser(entity);
+            retUser.DecryptedUserEmail = retUser.UserEmail;
+            retUser.UserEmail = _encryption.EncryptText(retUser.DecryptedUserEmail, ATMConstants.emailEncKey);
+            return retUser;
         }
 
         public async Task ProvideFeedback(int activityId, int activityRating)
@@ -88,7 +94,7 @@ namespace AdventureTourManagement.Models
                 activity_rating = activityRating
             };
 
-           await _dbContext.ActivityRatings.AddAsync(rating);
+            await _dbContext.ActivityRatings.AddAsync(rating);
             await _dbContext.SaveChangesAsync();
 
         }
@@ -96,8 +102,11 @@ namespace AdventureTourManagement.Models
         public async Task<VmUser> UpdatePassword(VmUser userDets)
         {
             VmUser result = null;
-            
-            if(!string.IsNullOrEmpty(userDets.UserEmail))
+
+            if (userDets.UserEmail == null && userDets.DecryptedUserEmail != null)
+                userDets.UserEmail = userDets.DecryptedUserEmail;
+
+            if (!string.IsNullOrEmpty(userDets.UserEmail))
             {
                 var existingUser = await _dbContext.User.AsNoTracking().Where(x => x.user_email == userDets.UserEmail).FirstOrDefaultAsync();
                 var newKey = _encryption.EncryptText(userDets.UserEncyryptedKey, userDets.UserEncryptionMessage);
@@ -105,10 +114,12 @@ namespace AdventureTourManagement.Models
                 var newMessage = _encryption.EncryptText(userDets.UserEncryptionMessage, masterKey);
                 existingUser.user_encryptedkey = newKey;
                 existingUser.user_encryptedmessage = newMessage;
-               var execResult =  _dbContext.User.Update(existingUser);
+                var execResult = _dbContext.User.Update(existingUser);
                 await _dbContext.SaveChangesAsync();
                 result = new VmUser(execResult.Entity);
 
+                result.DecryptedUserEmail = result.UserEmail;
+                result.UserEmail = _encryption.EncryptText(result.DecryptedUserEmail, ATMConstants.emailEncKey);
             }
 
             return result;
@@ -117,7 +128,8 @@ namespace AdventureTourManagement.Models
         public async Task<VmUser> UpdateUserDetails(VmUser userDets)
         {
             VmUser result = null;
-
+            if (userDets.UserEmail == null && userDets.DecryptedUserEmail != null)
+                userDets.UserEmail = userDets.DecryptedUserEmail;
             if (!string.IsNullOrEmpty(userDets.UserEmail))
             {
                 var existingUser = await _dbContext.User.AsNoTracking().Where(x => x.user_email == userDets.UserEmail).FirstOrDefaultAsync();
@@ -136,6 +148,8 @@ namespace AdventureTourManagement.Models
                 await _dbContext.SaveChangesAsync();
                 result = new VmUser(execResult.Entity);
 
+                result.DecryptedUserEmail = result.UserEmail;
+                result.UserEmail = _encryption.EncryptText(result.DecryptedUserEmail, ATMConstants.emailEncKey);
             }
 
             return result;
@@ -145,24 +159,34 @@ namespace AdventureTourManagement.Models
         {
             VmUser vUser = null;
 
-            if(!string.IsNullOrEmpty(userLogin.UserEmail) && !string.IsNullOrEmpty(userLogin.UserEncyryptedKey))
+            if (!string.IsNullOrEmpty(userLogin.UserEmail) && !string.IsNullOrEmpty(userLogin.UserEncyryptedKey))
             {
                 var userDetails = await _dbContext.User.AsNoTracking().Where(x => x.user_email == userLogin.UserEmail).FirstOrDefaultAsync();
-
-                var masterKey = userDetails.user_email.Substring(2, 4);
-                var message = _encryption.DecryptText(userDetails.user_encryptedmessage, masterKey);
-                var newMessage = _encryption.EncryptText(userDetails.user_encryptedkey, message);
-                var result = _encryption.CompareStrings(userDetails.user_encryptedkey, newMessage,message);
-
-                if (result)
+                if (userDetails != null)
                 {
-                    vUser = new VmUser(userDetails);
-                    return vUser;
+                    var masterKey = userDetails.user_email.Substring(2, 4);
+                    var message = _encryption.DecryptText(userDetails.user_encryptedmessage, masterKey);
+                    var newMessage = _encryption.EncryptText(userLogin.UserEncyryptedKey, message);
+                    var result = _encryption.CompareStrings(userDetails.user_encryptedkey, newMessage, message);
+
+                    if (result)
+                    {
+                        vUser = new VmUser(userDetails);
+
+                        vUser.DecryptedUserEmail = vUser.UserEmail;
+                        vUser.UserEmail = _encryption.EncryptText(vUser.DecryptedUserEmail, ATMConstants.emailEncKey);
+                        return vUser;
+                    }
+                    else
+                    {
+                        vUser = new VmUser();
+                        vUser.Message = "Invalid email/password";
+                    }
                 }
                 else
                 {
                     vUser = new VmUser();
-                    vUser.Message = "Invali email/password";
+                    vUser.Message = "User not found";
                 }
             }
             else

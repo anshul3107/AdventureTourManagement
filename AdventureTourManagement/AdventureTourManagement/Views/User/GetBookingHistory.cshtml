@@ -6,44 +6,54 @@
 
 <h2>Booking History</h2>
 
-<table class="table" style="width: 40%;">
-    @foreach (var item in Model.Bookings)
+@{
+    if ((Model.Bookings.Count == 0) || (Model.Bookings == null))
     {
-    <tr>
-        <td>
-            <div style="border-width:thin;border-color:black;border-style:solid;">
-                <table class="table mb-0">
-                    <tr>
-                        <td>
-                            <img src=@item.ActivityImage alt=@item.ActivityName class="img-fluid" style="width: 250px;">
-                        </td>
-                        <td>
-                            <table class="table">
-                                <tr>
-                                    <td colspan="2" align="center">
-                                        @Html.ActionLink(item.ActivityName, "FetchActivity", "GuestDashboard", new { activity_id = item.ActivityId })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label> Qty: 1 </label>
-                                    </td>
-                                    <td>
-                                        €@item.ActivityFee
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" align="right">
-                                        @Html.ActionLink("Rate Activity", "ProvideFeedbackView", "User", new { activity_id = item.ActivityId, userEmail = item.UserEmail }, new { @class = "btn btn-primary" })
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                <br />
-            </div>
-        </td>
-    </tr>
+        <label>No Bookings done so far !! Please book an activity.</label>
     }
-</table>
+
+    <table class="table" style="width: 40%;">
+        <tr> 
+            @Html.ActionLink("Logoff", "Index", "User",null)
+        </tr>
+        @foreach (var item in Model.Bookings)
+        {
+            <tr>
+                <td>
+                    <div style="border-width:thin;border-color:black;border-style:solid;">
+                        <table class="table mb-0">
+                            <tr>
+                                <td>
+                                    <img src=@item.ActivityImage alt=@item.ActivityName class="img-fluid" style="width: 250px;">
+                                </td>
+                                <td>
+                                    <table class="table">
+                                        <tr>
+                                            <td colspan="2" align="center">
+                                                @Html.ActionLink(item.ActivityName, "FetchActivity", "GuestDashboard", new { activity_id = item.ActivityId })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label> Qty: 1 </label>
+                                            </td>
+                                            <td>
+                                                €@item.ActivityFee
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" align="right">
+                                                @Html.ActionLink("Rate Activity", "ProvideFeedbackView", "User", new { activity_id = item.ActivityId, userEmail = item.UserEmail }, new { @class = "btn btn-primary" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+}
