@@ -1,5 +1,4 @@
 ﻿using AdventureTourManagement.Interface.Shopping;
-using AdventureTourManagement.Models;
 using AdventureTourManagement.Utility;
 using AdventureTourManagement.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -7,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SecureAccess;
 using SecureAccess.Helper;
-using SecureAccess.Model;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AdventureTourManagement.Controllers

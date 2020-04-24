@@ -20,7 +20,6 @@ namespace SecureAccess.Model
         public string EncryptedUserMessage { get; set; }
         public string EncryptedKey { get; set; }
         public string EncryptedMessage { get; set; }
-
     }
 
     public class VerificationInput

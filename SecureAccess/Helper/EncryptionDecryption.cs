@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,7 +7,6 @@ namespace SecureAccess.Helper
 {
     public class EncryptionDecryption
     {
-
         private static readonly EncryptionDecryption _encryption = new EncryptionDecryption();
 
         public static EncryptionDecryption CreateInstance() => _encryption;
@@ -33,13 +31,10 @@ namespace SecureAccess.Helper
             var diText = DecryptText(sourceText, passKey);
             var dinput = DecryptText(input, passKey);
 
-
             if (diText.Equals(dinput))
                 return true;
             else
                 return false;
-
-
         }
 
         //Encrypt - Decrypt Password
@@ -72,7 +67,7 @@ namespace SecureAccess.Helper
             return result;
 
         }
-        public byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passKeyBytes)
+        private byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passKeyBytes)
         {
             byte[] encryptedBytes = null;
 
@@ -101,7 +96,7 @@ namespace SecureAccess.Helper
             return encryptedBytes;
         }
 
-        public byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passKeyBytes)
+        private byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passKeyBytes)
         {
             byte[] decryptedBytes = null;
 
@@ -132,7 +127,7 @@ namespace SecureAccess.Helper
         }
 
 
-        public void ExecuteMethod(Action functoRun)
+        private void ExecuteMethod(Action functoRun)
         {
             functoRun();
         }

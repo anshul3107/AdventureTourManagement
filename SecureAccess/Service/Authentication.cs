@@ -1,10 +1,7 @@
-﻿
-using Microsoft.AspNetCore.Mvc.Filters;
-using SecureAccess.Helper;
+﻿using SecureAccess.Helper;
 using SecureAccess.Model;
 using System;
 using System.IO;
-using System.Net.Security;
 using System.Threading.Tasks;
 
 namespace SecureAccess
@@ -21,13 +18,11 @@ namespace SecureAccess
         }
         public async Task<Guid> Authenticate(AuthenticationInput authInputs)
         {
-            
             EmailAuthenticate authenticationByEmail = new EmailAuthenticate();
-       
-            var transactID =  await authenticationByEmail.SendAuthenticationEmail(authInputs);
 
-            return transactID; 
-            
+            var transactID = await authenticationByEmail.SendAuthenticationEmail(authInputs);
+
+            return transactID;
         }
 
         public async Task<bool> Verify(VerificationInput verifInputs)
@@ -37,16 +32,12 @@ namespace SecureAccess
 
             //string filepath = "\\TransactFiles\\" + verifInputs.TransactionIdentifier + ".txt";
 
-            
-
             string filepath = "/local/temp/" + verifInputs.TransactionIdentifier + ".txt";
-            // verifyToken.FileDecryption(filepath);
 
             DateTime fileCreationDate = File.GetCreationTime(filepath);
 
-            if (DateTime.Now.Subtract(fileCreationDate).TotalSeconds < 600) 
+            if (DateTime.Now.Subtract(fileCreationDate).TotalSeconds < 600)
             {
-
                 if (File.Exists(filepath))
                 {
                     var fileText = await File.ReadAllTextAsync(filepath);
@@ -54,6 +45,7 @@ namespace SecureAccess
                     {
                         string decrypted = verifyToken.DecryptText(fileText.Trim(), "encryptionKey");
 
+                        File.Delete(filepath);
                         if (decrypted == verifInputs.TransactionToken)
                         {
                             return true;
@@ -62,11 +54,13 @@ namespace SecureAccess
                             return false;
                     }
                     else
+                    {
+                        File.Delete(filepath);
                         return false;
+                    }
                 }
                 else
                     return false;
-
             }
             else
             {
@@ -93,9 +87,8 @@ namespace SecureAccess
         {
             GetEncryptionDecryption = EncryptionDecryption.CreateInstance();
             GetSecureAccess = Authentication.CreateInstance();
-
         }
-      
+
         public void Dispose()
         {
             GetSecureAccess = null;
@@ -105,7 +98,10 @@ namespace SecureAccess
     public class SecureAccessFactory
     {
         private TwoStepAuth _twoStepAuth;
-        public TwoStepAuth SecureAccess { get { return _twoStepAuth; } set
+        public TwoStepAuth SecureAccess
+        {
+            get { return _twoStepAuth; }
+            set
             {
                 _twoStepAuth = value;
             }
@@ -114,9 +110,7 @@ namespace SecureAccess
         public SecureAccessFactory CreateInstance(IServiceProvider serviceProvider)
         {
             var instance = serviceProvider.GetService(typeof(TwoStepAuth));
-            return new SecureAccessFactory { SecureAccess =(TwoStepAuth) instance };
+            return new SecureAccessFactory { SecureAccess = (TwoStepAuth)instance };
         }
-
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AdventureTourManagement.Controllers;
 using AdventureTourManagement.Interface.Shopping;
@@ -8,21 +7,29 @@ using AdventureTourManagement.Models;
 using AdventureTourManagement.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
+using SecureAccess;
 using Xunit;
 
 namespace AdventureTourManagement.Test.Controllers
 {
-   public class ShopControllerTest
+    public class ShopControllerTest
     {
         Mock<IShopping> _shopping;
         ShopController controller;
+        Mock<IServiceProvider> _provider;
+        Mock<ILogger<ShopController>> _logger;
+
 
         public ShopControllerTest()
         {
             _shopping = new Mock<IShopping>();
-            controller = new ShopController(_shopping.Object);
+            _provider = new Mock<IServiceProvider>();
+            _provider.Setup(x => x.GetService(typeof(TwoStepAuth))).Returns(new TwoStepAuth());
+            _logger = new Mock<ILogger<ShopController>>();
+            controller = new ShopController(_shopping.Object, _logger.Object, _provider.Object);
         }
 
         private void mockSession()
@@ -67,13 +74,13 @@ namespace AdventureTourManagement.Test.Controllers
                 Username = "test@xyz.com"
             };
 
-            _shopping.Setup(x => x.AddToCart(It.IsAny<int>(),It.IsAny<string>())).Returns(Task.FromResult(cart));
+            _shopping.Setup(x => x.AddToCart(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(cart));
 
             //Act
-            var result = await controller.BuyNowAsync( 1) as RedirectToActionResult;
+            var result = await controller.BuyNowAsync(1) as RedirectToActionResult;
 
             //Assert
-            Assert.Equal("GetUserDetails",result.ActionName);
+            Assert.Equal("GetUserDetails", result.ActionName);
         }
 
         [Fact]
@@ -84,7 +91,7 @@ namespace AdventureTourManagement.Test.Controllers
             _shopping.Setup(x => x.AuthenticateUser(It.IsAny<string>())).Returns(Task.FromResult(Guid.NewGuid()));
             VMUserDetail input = new VMUserDetail()
             {
-                user_email = "test@xyz.com",
+                user_email = "test@mail.com",
                 IsForgetPassword = 0,
                 cartId = 1
             };
@@ -123,7 +130,7 @@ namespace AdventureTourManagement.Test.Controllers
         {
             //Arrange
             mockSession();
-            
+
             VMUserDetail input = new VMUserDetail()
             {
                 user_email = "test@xyz.com",
@@ -163,7 +170,7 @@ namespace AdventureTourManagement.Test.Controllers
 
             //Assert
             Assert.NotNull(result.Model);
-            Assert.Equal("GetUserDetails",result.ViewName);
+            Assert.Equal("GetUserDetails", result.ViewName);
         }
 
         [Fact]
@@ -171,7 +178,7 @@ namespace AdventureTourManagement.Test.Controllers
         {
             //Arrange
             mockSession();
-           
+
 
             VMActivityCart cartOtpt = new VMActivityCart()
             {
@@ -254,7 +261,7 @@ namespace AdventureTourManagement.Test.Controllers
             var result = await controller.DeleteFromCart(1) as RedirectToActionResult;
 
             //Assert
-            Assert.Equal("ViewShoppingCart",result.ActionName);
+            Assert.Equal("ViewShoppingCart", result.ActionName);
         }
 
     }

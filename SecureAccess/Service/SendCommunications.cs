@@ -2,13 +2,8 @@
 using SecureAccess.Helper;
 using SecureAccess.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SecureAccess.Service
@@ -30,7 +25,7 @@ namespace SecureAccess.Service
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -40,12 +35,12 @@ namespace SecureAccess.Service
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
                 EncryptionDecryption encryption = EncryptionDecryption.CreateInstance();
-                
+
                 if (!string.IsNullOrEmpty(encryptedKey))
                 {
                     NetworkKeyDTO creds = JsonConvert.DeserializeObject<NetworkKeyDTO>(encryptedKey);
                     client.Credentials = new NetworkCredential(encryption.DecryptText(creds.EncryptedUserName, creds.EncryptedUserMessage),
-                        encryption.DecryptText(creds.EncryptedKey,creds.EncryptedMessage));
+                        encryption.DecryptText(creds.EncryptedKey, creds.EncryptedMessage));
                 }
 
                 return client;
@@ -58,5 +53,4 @@ namespace SecureAccess.Service
             }
         }
     }
-   
 }
