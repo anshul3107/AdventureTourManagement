@@ -57,6 +57,24 @@ namespace AdventureTourManagement
                 options.Cookie.IsEssential = true;
             });
 
+            //Add CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy1",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://adventuretourmanagement.azurewebsites.net");
+                    });
+
+                options.AddPolicy("Policy2",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://adventuretourmanagement.azurewebsites.net")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
 
         }
@@ -87,8 +105,9 @@ namespace AdventureTourManagement
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=User}/{action=Index}/{id?}");
             });
+            app.UseCors();
         }
     }
 }
